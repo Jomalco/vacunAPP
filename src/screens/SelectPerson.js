@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator  } from 'react-native'
 import React from 'react'
 import {
   getFirestore, doc, getDoc
@@ -7,10 +7,12 @@ import { useEffect, useState } from 'react'
 
 const SelectPerson = ({ route, navigation }) => {
   const [personas, setPersonas] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getDocuments().then(array => {
       setPersonas(array);
+      setIsLoading(false);
     });
    }, []);
  
@@ -30,6 +32,15 @@ const SelectPerson = ({ route, navigation }) => {
      console.log("No such document!");
      return null;
    }
+  }
+
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color="#00ff00" />
+        <Text>Cargando...</Text>
+      </View>
+    );
   }
 
   return (
@@ -75,6 +86,11 @@ const styles = StyleSheet.create({
     borderColor: 'green',
     fontStyle: 'bold',
     backgroundColor: 'lightgreen',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loading: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   }

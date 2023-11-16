@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View, SafeAreaView, Button } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { useState } from 'react';
 import {
   getFirestore, collection, getDocs, doc,
   updateDoc, arrayUnion
 } from 'firebase/firestore';
-import { CheckBox, Input } from '@rneui/themed';
+import { CheckBox, Input, Button } from '@rneui/themed';
 import React from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AppButton from '../microComponents/AppButton';
@@ -104,8 +104,28 @@ const CreatePerson = ({ route, navigation }) => {
           label="Agregar nombre"
           onChangeText={handleInputChange}
         />
-        <Button onPress={showDatepicker} title="Seleccionar Fecha de Nacimiento" />
-        <Text>Fecha seleccionada: {date.toDateString()}</Text>
+        <View style={styles.agregarPersonaButton}>
+          <Button
+            title="Seleccionar Fecha de Nacimiento"
+            loading={false}
+            loadingProps={{ size: 'small', color: 'white' }}
+            buttonStyle={{
+              backgroundColor: 'rgba(111, 202, 186, 1)',
+              borderRadius: 5,
+            }}
+            titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
+            containerStyle={{
+              marginHorizontal: 50,
+              height: "auto",
+              width: "80vw",
+              marginVertical: 10,
+            }}
+            onPress={showDatepicker}
+          />
+          <Text>Fecha seleccionada: {date.toDateString()}</Text>
+        </View>
+        
+        
         {show && (
           <DateTimePicker
             testID="dateTimePicker"
@@ -168,7 +188,26 @@ const CreatePerson = ({ route, navigation }) => {
           onPress={() => setCheck8(!check8)}
         />
       </SafeAreaView>
-      <AppButton title="Agregar persona" onPress={() => {addDocument(); navigation.navigate("SelectPerson", { uid: uid })}}/>  
+      <View style={styles.agregarPersonaButton}>
+      <Button
+          title="Agregar"
+          loading={false}
+          loadingProps={{ size: 'small', color: 'white' }}
+          buttonStyle={{
+            backgroundColor: 'rgba(111, 202, 186, 1)',
+            borderRadius: 5,
+          }}
+          titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
+          containerStyle={{
+            marginHorizontal: 50,
+            height: 50,
+            width: "80vw",
+            marginVertical: 10,
+          }}
+          onPress={() => {addDocument(); navigation.navigate("SelectPerson", { uid: uid })}}
+        />
+      </View>
+       
     </View>
   )
 }
@@ -193,5 +232,12 @@ const styles = StyleSheet.create({
   },
   fechaNacimiento: {
     width: "50%"
+  },
+  agregarPersonaButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+
   }
 })
