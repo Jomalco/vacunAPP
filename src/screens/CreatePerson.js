@@ -1,15 +1,16 @@
-import { StyleSheet, Text, View, SafeAreaView, Button } from 'react-native'
-import { useState } from 'react'
+import { StyleSheet, Text, View, SafeAreaView, Button } from 'react-native';
+import { useState } from 'react';
 import {
   getFirestore, collection, getDocs, doc,
   updateDoc, arrayUnion
-} from 'firebase/firestore'
-import { CheckBox } from '@rneui/themed';
+} from 'firebase/firestore';
+import { CheckBox, Input } from '@rneui/themed';
+import React from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import AppButton from '../microComponents/AppButton'
+import AppButton from '../microComponents/AppButton';
 //import firebase from 'firebase'
 
-const CreatePerson = ({ route }) => {
+const CreatePerson = ({ route, navigation }) => {
 
   const { uid } = route.params;
   console.log(uid)
@@ -19,6 +20,7 @@ const CreatePerson = ({ route }) => {
   const addDocument = () => {
     updateDoc(docRef, {
       Personas: arrayUnion({
+        username: inputValue,
         birthdate: formatDate(date),
         FactoresDeRiesgo: createRiskFactorArray(),
         })
@@ -33,6 +35,7 @@ const CreatePerson = ({ route }) => {
       setCheck7(false);
       setCheck8(false);
       setDate(new Date())
+      inputName.current.clear()
       console.log("documentAdded")
     })
     .catch((error) => {
@@ -43,6 +46,12 @@ const CreatePerson = ({ route }) => {
 
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleInputChange = (text) => {
+    setInputValue(text);
+  };
 
   function formatDate(date) {
     var day = ("0" + date.getDate()).slice(-2);
@@ -83,13 +92,18 @@ const CreatePerson = ({ route }) => {
   const [check7, setCheck7] = useState(false);
   const [check8, setCheck8] = useState(false);
 
- 
+  const inputName = React.createRef();
 
 
   return (
     <View>
       <SafeAreaView>
         <Text style={styles.titleText}> Crear nuevo registro vacunatorio: </Text>
+        <Input
+          ref={inputName}
+          label="Agregar nombre"
+          onChangeText={handleInputChange}
+        />
         <Button onPress={showDatepicker} title="Seleccionar Fecha de Nacimiento" />
         <Text>Fecha seleccionada: {date.toDateString()}</Text>
         {show && (
@@ -102,7 +116,9 @@ const CreatePerson = ({ route }) => {
           />
         )}
       </SafeAreaView>
-      <SafeAreaView>
+      <SafeAreaView
+        style={styles.factoresDeRiesgo}
+      >
         <CheckBox
           center
           title="Factor de Riesgo 1"
@@ -152,7 +168,7 @@ const CreatePerson = ({ route }) => {
           onPress={() => setCheck8(!check8)}
         />
       </SafeAreaView>
-      <AppButton title="Agregar persona" onPress={() => addDocument()}/>  
+      <AppButton title="Agregar persona" onPress={() => {addDocument(); navigation.navigate("SelectPerson", { uid: uid })}}/>  
     </View>
   )
 }
@@ -171,5 +187,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginVertical: 10,
     textAlign: 'center'
+  },
+  factoresDeRiesgo: {
+    marginTop: 20
+  },
+  fechaNacimiento: {
+    width: "50%"
   }
 })

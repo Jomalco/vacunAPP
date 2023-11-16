@@ -5,16 +5,15 @@ import {
 } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 
-const SelectPerson = ({ route }) => {
+const SelectPerson = ({ route, navigation }) => {
   const [personas, setPersonas] = useState([]);
 
   useEffect(() => {
-   // Replace this with your actual fetch logic
-   getDocuments().then(array => {
-     setPersonas(array);
-   });
-  }, []);
-
+    getDocuments().then(array => {
+      setPersonas(array);
+    });
+   }, []);
+ 
   const { uid } = route.params;
   const db = getFirestore();
   const docRef = doc(db, 'users', uid);
@@ -32,8 +31,6 @@ const SelectPerson = ({ route }) => {
      return null;
    }
   }
-  
-  let documentArray = getDocuments;
 
   return (
     <View>
@@ -43,15 +40,15 @@ const SelectPerson = ({ route }) => {
           key={index}
           onPress={() => console.log({persona})}
         >
-          <Text>{persona.birthdate}</Text>
+          <Text>{persona.username.toUpperCase()}</Text>
         </TouchableOpacity>
         ))}
         <TouchableOpacity
           style={styles.buttonAgregarPersona}
           key={"agregarPersona"}
-          onPress={() => console.log("Agregar Persona")}
+          onPress={() => navigation.navigate("CreatePerson", { uid: uid })}
         >
-          <Text>+</Text>
+          <Text>AGREGAR NUEVA PERSONA</Text>
         </TouchableOpacity>
     </View>
   )
