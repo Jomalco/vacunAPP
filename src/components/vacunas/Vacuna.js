@@ -22,7 +22,7 @@ function Vacuna(props) {
     return (
         <>
             <View>
-                <Text>Welcome Page</Text>
+                <Text>Welcome Pag</Text>
             </View>
         </>
     )
