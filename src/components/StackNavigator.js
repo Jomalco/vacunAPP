@@ -18,7 +18,6 @@ function MyStack() {
       <Stack.Screen name="CreatePerson" component={CreatePerson} />
       <Stack.Screen name="SelectPerson" component={SelectPerson} />
       <Stack.Screen name="VacunAPP" component={HomeScreen} />
-      <Stack.Screen name="Welcome" component={Welcome} />
     </Stack.Navigator>
   );
 }

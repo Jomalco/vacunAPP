@@ -1,30 +1,39 @@
 import * as React from 'react';
+import { useState } from 'react';
 import {
   StyleSheet,
   Text,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from 'react-native';
 
 import Componenx from '../components/Componenx'
+import PersonaContext from '../contexts/PersonaContext';
 import CreatePerson from './CreatePerson';
 import SelectPerson from './SelectPerson';
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import {
+  getFirestore, doc, getDoc
+} from 'firebase/firestore'
 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const Tab = createBottomTabNavigator()
 
 function HomeScreen({ route }) {
-
   const { uid } = route.params;
 
-    return (
-      <Tab.Navigator
+  const [vacunasPasadas, setVacunasPasadas] = useState([]);
+  const [vacunasFuturas, setVacunasFuturas] = useState([]);
+  const [vacunasIndefinidas, setVacunasIndefinidas] = useState([]);
+
+  const tabNavigator = (
+    <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{headerShown: false}}
-      >
-        <Tab.Screen
+    >
+      <Tab.Screen
         name="PageOne"
         component={Componenx}
         options={{ title: 'Vacunas Previas',
@@ -33,8 +42,8 @@ function HomeScreen({ route }) {
             size={size} color={color} />
         )
         }}
-        />
-        <Tab.Screen
+      />
+      <Tab.Screen
         name="PageTwo"
         component={SelectPerson}
         initialParams={{ uid: uid }}
@@ -44,8 +53,8 @@ function HomeScreen({ route }) {
             size={size} color={color} />
         )
         }}
-        />
-        <Tab.Screen
+      />
+      <Tab.Screen
         name="PageThree"
         component={CreatePerson}
         initialParams={{ uid: uid }}
@@ -55,18 +64,15 @@ function HomeScreen({ route }) {
             size={size} color={color} />
         )
         }}
-        />
+      />
     </Tab.Navigator>
-    );
-}
-export default HomeScreen;
+  );
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 7,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f5f5f5',
-    width: "100%"
-  }
-});
+  return (
+    <PersonaContext.Provider value={{vacunasPasadas, vacunasFuturas, vacunasIndefinidas}}>
+      {tabNavigator}
+    </PersonaContext.Provider>
+  );
+}
+
+export default HomeScreen;

@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { createContext } from 'react';
 
-const PersonaContext = React.createContext();
+
+
+const PersonaContext = createContext({
+    vacunasPasadas: [],
+    vacunasFuturas: [],
+    vacunasIndefinidas: [],
+  });
 
 export default PersonaContext;
