@@ -145,9 +145,9 @@ class Meningococo {
       };
     }
     calcularFechaVacunacion() {
-      if(calculateAgeInMonths(this.birthdate) <= 2)
+      if(calculateAgeInMonths(this.birthdate) >= 2 && this.Meningococo.status == 2)
       {
-
+        this.Meningococo.fechaVacunacion = calculateVaccinationDate(this.birthdate, 132) //Si no está vacunado con las dosis que arrancan a los 2 meses, se hace una dosis única a los 11 años
       }
     }
 }
