@@ -12,8 +12,15 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#f00505',
-      width: "100%"
+      backgroundColor: 'blue',
+      width: "100%",
+      height: "20%",
+    },
+    vacunaContainer: {
+      borderRadius: "40%",
+      backgroundColor: "green",
+      borderColor: "black",
+      borderWidth: 2
     }
   });
 
@@ -21,8 +28,10 @@ function Vacuna(props) {
 
     return (
         <>
-            <View>
-                <Text>Welcome Pag</Text>
+            <View style={styles.container}>
+              <View style={styles.vacunaContainer}>
+                <Text>Titulo de la Vacuna</Text>
+              </View>
             </View>
         </>
     )

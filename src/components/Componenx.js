@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { auth } from '../firebase';
+import Vacuna from '../components/vacunas/Vacuna'
 
 const styles = StyleSheet.create({
  container: {
@@ -32,6 +33,7 @@ export default function Componenx({navigation}) {
       Log Out
     </Text>
    </TouchableOpacity>
+   <Vacuna/>
  </View>
  );
 }
