@@ -12,15 +12,20 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: 'blue',
+      backgroundColor: 'lightblue',
       width: "100%",
       height: "20%",
     },
     vacunaContainer: {
-      borderRadius: "40%",
-      backgroundColor: "green",
-      borderColor: "black",
-      borderWidth: 2
+      fontWeight: "bold",
+      textDecorationLines: "underline",
+      borderRadius: 20,
+      backgroundColor: "lightgrey",
+      borderColor: "grey",
+      borderWidth: 2,
+      width: "95%",
+      height: "10%",
+      padding: 10
     }
   });
 
