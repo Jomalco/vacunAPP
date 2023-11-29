@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native';
 import { useState } from 'react';
 import {
   getFirestore, collection, getDocs, doc,
@@ -96,7 +96,7 @@ const CreatePerson = ({ route, navigation }) => {
 
 
   return (
-    <View>
+    <ScrollView>
       <SafeAreaView>
         <Text style={styles.titleText}> Crear nuevo registro vacunatorio: </Text>
         <Input
@@ -204,11 +204,11 @@ const CreatePerson = ({ route, navigation }) => {
             width: "80vw",
             marginVertical: 10,
           }}
-          onPress={() => {addDocument(); navigation.navigate("SelectPerson", { uid: uid })}}
+          onPress={() => {addDocument(); navigation.goBack()}}
         />
       </View>
        
-    </View>
+    </ScrollView>
   )
 }
 

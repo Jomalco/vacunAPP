@@ -3,7 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import DateField from 'react-native-datefield';
-
+import {
+  getFirestore, doc, setDoc
+} from 'firebase/firestore';
 import { auth } from '../firebase'
 
 const RegisterScreen = () => {
@@ -18,34 +20,46 @@ const RegisterScreen = () => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         console.log(user.uid)
-        navigation.replace("VacunAPP")
       }
     })
-
     return unsubscribe
   }, [])
 
   const handleSignUp = () => {
     if(password == password2)
     {
-      createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredentials => {
-        const user = userCredentials.user;
-        console.log('Registered with:', user.email);
-      })
-      .catch(error => alert(error.message));
+     createUserWithEmailAndPassword(auth, email, password)
+     .then(userCredentials => {
+       const user = userCredentials.user;
+       console.log('Registered with:', user.email);
+   
+       // Add user to Firestore
+       const db = getFirestore();
+       const docRef = doc(db, 'users', user.uid);
+       setDoc(docRef, {
+         email: user.email,
+         // Add any other user data you want to store here
+       }, { merge: true })
+       .then(() => {
+         console.log("User document added or updated");
+       })
+       .catch((error) => {
+         console.error("Error adding or updating user document: ", error);
+       });
+     })
+     .catch(error => alert(error.message));
     }
     else
     {
-      alert("Las contraseñas no cohinciden, por favor vuelva a intentar")
+     alert("Las contraseñas no cohinciden, por favor vuelva a intentar")
     }
-    
-  }
+   }
+   
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior="padding"
+      behavior="height"
     >
       <View style={styles.inputContainer}>
         <View style={styles.registerSection}>

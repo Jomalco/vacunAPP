@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator  } from 'react-native'
+import { StyleSheet, Text, ScrollView, TouchableOpacity, ActivityIndicator  } from 'react-native'
 import React from 'react'
 import {
   getFirestore, doc, getDoc
 } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
 
 const SelectPerson = ({ route, navigation }) => {
   const [personas, setPersonas] = useState([]);
@@ -15,6 +16,18 @@ const SelectPerson = ({ route, navigation }) => {
       setIsLoading(false);
     });
    }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setTimeout(() => { 
+        getDocuments().then(array => {
+        setPersonas(array);
+        setIsLoading(false);
+        });
+      }, 500)
+      
+    }, [])
+  );
  
   const { uid } = route.params;
   const db = getFirestore();
@@ -43,26 +56,44 @@ const SelectPerson = ({ route, navigation }) => {
     );
   }
 
-  return (
-    <View>
-        {personas.map((persona, index) => (
+  if(personas != null)
+  {
+    return (
+      <ScrollView>
+          {personas.map((persona, index) => (
+          <TouchableOpacity
+            style={styles.buttonPersona}
+            key={index}
+            onPress={() => console.log({persona})}
+          >
+            <Text>{persona.username.toUpperCase()}</Text>
+          </TouchableOpacity>
+          ))}
+          <TouchableOpacity
+            style={styles.buttonAgregarPersona}
+            key={"agregarPersona"}
+            onPress={() => navigation.navigate("CreatePerson", { uid: uid })}
+          >
+            <Text>AGREGAR NUEVA PERSONA</Text>
+          </TouchableOpacity>
+      </ScrollView>
+    )
+  }
+  else
+  {
+    return (
+      <View>
         <TouchableOpacity
-          style={styles.buttonPersona}
-          key={index}
-          onPress={() => console.log({persona})}
-        >
-          <Text>{persona.username.toUpperCase()}</Text>
+            style={styles.buttonAgregarPersona}
+            key={"agregarPersona"}
+            onPress={() => navigation.navigate("CreatePerson", { uid: uid })}
+          >
+            <Text>AGREGAR NUEVA PERSONA</Text>
         </TouchableOpacity>
-        ))}
-        <TouchableOpacity
-          style={styles.buttonAgregarPersona}
-          key={"agregarPersona"}
-          onPress={() => navigation.navigate("CreatePerson", { uid: uid })}
-        >
-          <Text>AGREGAR NUEVA PERSONA</Text>
-        </TouchableOpacity>
-    </View>
-  )
+      </View>
+    )
+  }
+  
 }
 
 export default SelectPerson
