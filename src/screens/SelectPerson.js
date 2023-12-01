@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ScrollView, TouchableOpacity, ActivityIndicator  } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ActivityIndicator  } from 'react-native'
 import React from 'react'
 import {
   getFirestore, doc, getDoc

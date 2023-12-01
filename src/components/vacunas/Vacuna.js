@@ -24,7 +24,12 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       width: "95%",
       height: "auto",
-      padding: 10
+      padding: 10,
+      shadowColor: 'grey',
+      shadowOpacity: 1,
+      elevation: 1,
+      shadowRadius: 10 ,
+      shadowOffset : { width: 1, height: 2},
     },
     vacunaFirstInnerContainer: {
       justifyContent: 'center',

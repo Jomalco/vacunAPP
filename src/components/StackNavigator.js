@@ -6,19 +6,22 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import CreatePerson from '../screens/CreatePerson';
 import SelectPerson from '../screens/SelectPerson';
+//import PersonaContext from '../contexts/PersonaContext';
+
+
 const Stack = createNativeStackNavigator();
 
 function MyStack() {
-  return (
-    <Stack.Navigator
-        initialRouteName="LoginScreen"
-    >
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
-      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-      <Stack.Screen name="CreatePerson" component={CreatePerson} />
-      <Stack.Screen name="SelectPerson" component={SelectPerson} />
-      <Stack.Screen name="VacunAPP" component={HomeScreen} />
-    </Stack.Navigator>
+    return (
+      <Stack.Navigator
+          initialRouteName="LoginScreen"
+      >
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+        <Stack.Screen name="CreatePerson" component={CreatePerson} />
+        <Stack.Screen name="SelectPerson" component={SelectPerson} />
+        <Stack.Screen name="VacunAPP" component={HomeScreen} />
+      </Stack.Navigator>
   );
 }
 

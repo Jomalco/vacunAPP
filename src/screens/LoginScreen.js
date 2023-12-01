@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputContainer: {
-    width: '80%'
+    width: '80%',
+    elevation: 1
   },
   input: {
     backgroundColor: 'white',
