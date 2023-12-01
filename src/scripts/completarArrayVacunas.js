@@ -1,6 +1,14 @@
 var vacunasPasadas = [];
-var vacunasCercanas = [];
+var vacunasIndefinidas = [];
 var vacunasFuturas = [];
+
+export default function completarArrayVacunas() {
+  neumo = new NeumococoConjugada("27/08/1999")
+  vacunasIndefinidas.push(NeumococoConjugada)
+}
+
+
+//--------------------------------------------------------
 
 function calculateAgeInMonths(birthdate) {
     if (typeof birthdate !== 'string') {

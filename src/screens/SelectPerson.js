@@ -1,14 +1,21 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ActivityIndicator  } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ActivityIndicator, FlatList  } from 'react-native'
+import React, { useContext } from 'react'
 import {
   getFirestore, doc, getDoc
 } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native'
+import { PersonaContext } from '../contexts/PersonaContext'
 
 const SelectPerson = ({ route, navigation }) => {
   const [personas, setPersonas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const {
+    vacunasPasadas, setVacunasPasadas,
+    vacunasFuturas, setVacunasFuturas,
+    vacunasIndefinidas, setVacunasIndefinidas
+  } = useContext(PersonaContext)
 
   useEffect(() => {
     getDocuments().then(array => {
@@ -47,6 +54,10 @@ const SelectPerson = ({ route, navigation }) => {
    }
   }
 
+  const setContext = async (vacunas) => {
+    setVacunasIndefinidas(vacunas)
+  }
+
   if (isLoading) {
     return (
       <View style={styles.loading}>
@@ -64,7 +75,7 @@ const SelectPerson = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.buttonPersona}
             key={index}
-            onPress={() => console.log({persona})}
+            onPress={() => {setContext(persona.FactoresDeRiesgo); console.log(persona.FactoresDeRiesgo)}}
           >
             <Text>{persona.username.toUpperCase()}</Text>
           </TouchableOpacity>
@@ -76,6 +87,9 @@ const SelectPerson = ({ route, navigation }) => {
           >
             <Text>AGREGAR NUEVA PERSONA</Text>
           </TouchableOpacity>
+          <FlatList>
+
+          </FlatList>
       </ScrollView>
     )
   }

@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     }
   });
 
-function Vacuna() {
+function Vacuna(props) {
 
   const [selectedIndex, setSelectedIndex] = useState(2);
 
