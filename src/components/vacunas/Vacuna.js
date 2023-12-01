@@ -1,11 +1,11 @@
-import React from 'react'
+import { useState } from 'react';
 import {
     StyleSheet,
     Text,
     View
   } from 'react-native';
 
-import AppButton from '../../microComponents/AppButton'
+import { ButtonGroup, Icon } from '@rneui/themed';
 
 const styles = StyleSheet.create({
     container: {
@@ -17,25 +17,59 @@ const styles = StyleSheet.create({
       height: "20%",
     },
     vacunaContainer: {
-      fontWeight: "bold",
-      textDecorationLines: "underline",
+      flexDirection: "row",
       borderRadius: 20,
       backgroundColor: "lightgrey",
       borderColor: "grey",
       borderWidth: 2,
       width: "95%",
-      height: "10%",
+      height: "auto",
       padding: 10
+    },
+    vacunaFirstInnerContainer: {
+      justifyContent: 'center',
+      flexDirection: "column",
+      flex: 3,
+    },
+    vacunaSecondInnerContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: "column",
+      flex: 1
+    },
+    textOne: {
+      fontWeight: "bold"
+    },
+    textTwo: {
+      fontStyle: "italic"
     }
   });
 
-function Vacuna(props) {
+function Vacuna() {
+
+  const [selectedIndex, setSelectedIndex] = useState(2);
 
     return (
         <>
             <View style={styles.container}>
               <View style={styles.vacunaContainer}>
-                <Text>Titulo de la Vacuna</Text>
+                <View style={styles.vacunaFirstInnerContainer}>
+                  <Text style={styles.textOne}>Título de la Vacuna</Text>
+                  <Text style={styles.textTwo}>Dosis 1/3</Text>
+                  <Text style={styles.textTwo}>Día de vacunación estimado: dd/mm/yyyy</Text>
+                </View>
+                <View style={styles.vacunaSecondInnerContainer}>
+                  <ButtonGroup
+                    buttonStyle={{ padding: 0 }}
+                    selectedButtonStyle={{ backgroundColor: '#e2e2e2' }}
+                    buttons={[
+                      <Icon name="check" />,
+                      <Icon name="close" />,
+                    ]}
+                    selectedIndex={selectedIndex}
+                    onPress={setSelectedIndex}
+                  />
+                </View>
               </View>
             </View>
         </>
