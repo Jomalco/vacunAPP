@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 
 import Componenx from '../components/Componenx'
-import PersonaContext from '../contexts/PersonaContext';
 import CreatePerson from './CreatePerson';
 import SelectPerson from './SelectPerson';
 
@@ -28,7 +27,7 @@ function HomeScreen({ route }) {
   const [vacunasFuturas, setVacunasFuturas] = useState([]);
   const [vacunasIndefinidas, setVacunasIndefinidas] = useState([]);
 
-  const tabNavigator = (
+  return (
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{headerShown: false}}
@@ -67,12 +66,5 @@ function HomeScreen({ route }) {
       />
     </Tab.Navigator>
   );
-
-  return (
-    <PersonaContext.Provider value={{vacunasPasadas, vacunasFuturas, vacunasIndefinidas}}>
-      {tabNavigator}
-    </PersonaContext.Provider>
-  );
 }
-
 export default HomeScreen;
