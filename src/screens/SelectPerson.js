@@ -37,8 +37,8 @@ const SelectPerson = ({ route, navigation }) => {
   );
 
   function NavigatePersona(p) {
-    setVacunasIndefinidas(p.vacunasIndefinidas)
-    navigation.navigate("UndefinedVacuna")
+    setVacunasIndefinidas(p)
+    navigation.navigate("UndefinedVacunas")
   }
  
   const { uid } = route.params;
@@ -78,7 +78,7 @@ const SelectPerson = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.buttonPersona}
             key={index}
-            onPress={() => {NavigatePersona(persona.FactoresDeRiesgo); console.log(persona.FactoresDeRiesgo)}}
+            onPress={() => {NavigatePersona(persona.VacunasIndefinidas); console.log(persona.VacunasIndefinidas)}}
           >
             <Text>{persona.username.toUpperCase()}</Text>
           </TouchableOpacity>

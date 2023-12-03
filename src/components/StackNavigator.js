@@ -7,6 +7,7 @@ import RegisterScreen from '../screens/RegisterScreen';
 import CreatePerson from '../screens/CreatePerson';
 import SelectPerson from '../screens/SelectPerson';
 import {PersonaContext, PersonaProvider} from '../contexts/PersonaContext';
+import UndefinedVacunas from './UndefinedVacunas';
 
 
 const Stack = createNativeStackNavigator();
@@ -21,6 +22,7 @@ function MyStack() {
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
           <Stack.Screen name="CreatePerson" component={CreatePerson} />
           <Stack.Screen name="SelectPerson" component={SelectPerson} />
+          <Stack.Screen name="UndefinedVacunas" component={UndefinedVacunas} />
           <Stack.Screen name="VacunAPP" component={HomeScreen} />
         </Stack.Navigator>
       </PersonaProvider>

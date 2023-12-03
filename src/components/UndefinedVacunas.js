@@ -16,7 +16,7 @@ export default function UndefinedVacunas({ navigation }) {
   console.log(vacunasIndefinidas)
   return (
     <View style={styles.container}>
-      {vacunasIndefinidas[0].map((item, index) => (
+      {vacunasIndefinidas.map((item, index) => (
        <Vacuna key={index} {...item} />
      ))}
     </View>
@@ -26,10 +26,10 @@ export default function UndefinedVacunas({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'lightblue',
     width: "100%",
     height: "20%",
+    paddingTop: 5 
   },
 })
