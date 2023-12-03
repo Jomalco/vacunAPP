@@ -8,14 +8,6 @@ import {
 import { ButtonGroup, Icon } from '@rneui/themed';
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'lightblue',
-      width: "100%",
-      height: "20%",
-    },
     vacunaContainer: {
       flexDirection: "row",
       borderRadius: 20,
@@ -30,6 +22,7 @@ const styles = StyleSheet.create({
       elevation: 1,
       shadowRadius: 10 ,
       shadowOffset : { width: 1, height: 2},
+      marginTop: 10
     },
     vacunaFirstInnerContainer: {
       justifyContent: 'center',
@@ -51,17 +44,15 @@ const styles = StyleSheet.create({
   });
 
 function Vacuna(props) {
-
+//{props.dosis[0]}/{props.dosis[1]}
   const [selectedIndex, setSelectedIndex] = useState(2);
-
     return (
         <>
-            <View style={styles.container}>
               <View style={styles.vacunaContainer}>
                 <View style={styles.vacunaFirstInnerContainer}>
-                  <Text style={styles.textOne}>Título de la Vacuna</Text>
-                  <Text style={styles.textTwo}>Dosis 1/3</Text>
-                  <Text style={styles.textTwo}>Día de vacunación estimado: dd/mm/yyyy</Text>
+                  <Text style={styles.textOne}>{props.nombre}</Text>
+                  <Text style={styles.textTwo}>Dosis </Text>
+                  <Text style={styles.textTwo}>Día de vacunación estimado: {props.fechaVacunacion}</Text>
                 </View>
                 <View style={styles.vacunaSecondInnerContainer}>
                   <ButtonGroup
@@ -76,7 +67,6 @@ function Vacuna(props) {
                   />
                 </View>
               </View>
-            </View>
         </>
     )
 }

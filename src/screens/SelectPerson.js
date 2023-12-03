@@ -35,6 +35,11 @@ const SelectPerson = ({ route, navigation }) => {
       
     }, [])
   );
+
+  function NavigatePersona(p) {
+    setVacunasIndefinidas(p.vacunasIndefinidas)
+    navigation.navigate("UndefinedVacuna")
+  }
  
   const { uid } = route.params;
   const db = getFirestore();
@@ -54,9 +59,7 @@ const SelectPerson = ({ route, navigation }) => {
    }
   }
 
-  const setContext = async (vacunas) => {
-    setVacunasIndefinidas(vacunas)
-  }
+
 
   if (isLoading) {
     return (
@@ -75,7 +78,7 @@ const SelectPerson = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.buttonPersona}
             key={index}
-            onPress={() => {setContext(persona.FactoresDeRiesgo); console.log(persona.FactoresDeRiesgo)}}
+            onPress={() => {NavigatePersona(persona.FactoresDeRiesgo); console.log(persona.FactoresDeRiesgo)}}
           >
             <Text>{persona.username.toUpperCase()}</Text>
           </TouchableOpacity>

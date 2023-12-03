@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { auth } from '../firebase';
-import Vacuna from '../components/vacunas/Vacuna'
+import UndefinedVacuna from '../components/UndefinedVacunas'
 import { PersonaContext } from '../contexts/PersonaContext';
 import { FlatList } from 'react-native-web';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -42,8 +42,7 @@ export default function Componenx({navigation}) {
       Log Out
     </Text>
    </TouchableOpacity>
-    <Text>{vacunasIndefinidas}</Text>
-   <Vacuna/>
+   <UndefinedVacuna/>
  </View>
  );
 }
