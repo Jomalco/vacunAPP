@@ -1,19 +1,23 @@
 import { useNavigation } from '@react-navigation/core'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../firebase'
+import { PersonaContext } from '../contexts/PersonaContext';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const navigation = useNavigation()
+  const { setUid } = useContext(PersonaContext)
+  
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        navigation.replace("VacunAPP", { uid: user.uid })
+        setUid(user.uid)
+        navigation.replace("SelectPerson", { uid: user.uid })
       }
     })
 

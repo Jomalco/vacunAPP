@@ -16,22 +16,22 @@ const styles = StyleSheet.create({
  }
 });
 
-export default function Componenx({navigation}) {
+export default function Componenx({ navigation }) {
  const [user, setUser] = useState(null);
 
- const {
-  vacunasPasadas, setVacunasPasadas,
-  vacunasFuturas, setVacunasFuturas,
-  vacunasIndefinidas, setVacunasIndefinidas
-} = useContext(PersonaContext)
+  const {
+    vacunasPasadas, setVacunasPasadas,
+    vacunasFuturas, setVacunasFuturas,
+    vacunasIndefinidas, setVacunasIndefinidas
+  } = useContext(PersonaContext)
 
- useEffect(() => {
- const unsubscribe = auth.onAuthStateChanged(user => {
-   setUser(user);
- });
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+    setUser(user);
+  });
 
- // Cleanup subscription on unmount
- return () => unsubscribe();
+  // Cleanup subscription on unmount
+  return () => unsubscribe();
  }, []);
 
  return (
@@ -42,7 +42,7 @@ export default function Componenx({navigation}) {
       Log Out
     </Text>
    </TouchableOpacity>
-   <UndefinedVacuna/>
+   <UndefinedVacuna navigation={navigation}/>
  </View>
  );
 }

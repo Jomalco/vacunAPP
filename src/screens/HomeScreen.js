@@ -23,10 +23,6 @@ const Tab = createBottomTabNavigator()
 function HomeScreen({ route }) {
   const { uid } = route.params;
 
-  const [vacunasPasadas, setVacunasPasadas] = useState([]);
-  const [vacunasFuturas, setVacunasFuturas] = useState([]);
-  const [vacunasIndefinidas, setVacunasIndefinidas] = useState([]);
-
   return (
     <Tab.Navigator
       initialRouteName="Home"

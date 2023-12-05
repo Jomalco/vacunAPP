@@ -2,26 +2,69 @@ var vacunasPasadas = [];
 var vacunasIndefinidas = [];
 var vacunasFuturas = [];
 
-export default function completarArrayVacunas() {
-  neumo = new NeumococoConjugada("27/08/1999")
-  vacunasIndefinidas.push(NeumococoConjugada)
+export default function completarArrayVacunas(birthdate) {
+  let date = birthdate
+  let NeumococoConjugad = new NeumococoConjugada(date)
+  vacunasIndefinidas.push(NeumococoConjugad)
+  let Pentavalent = new Pentavalente(date)
+  vacunasIndefinidas.push(Pentavalent)
+  let IP = new IPV(date)
+  vacunasIndefinidas.push(IP)
+  let Meningococ = new Meningococo(date)
+  vacunasIndefinidas.push(Meningococ)
+  let Antigripa = new Antigripal(date)
+  vacunasIndefinidas.push(Antigripa)
+  let Hepatitis = new HepatitisA(date)
+  vacunasIndefinidas.push(Hepatitis)
+  let Rotaviru = new Rotavirus(date)
+  vacunasIndefinidas.push(Rotaviru)
+  let TripleVira = new TripleViral(date)
+  vacunasIndefinidas.push(TripleVira)
+  let Varicel = new Varicela(date)
+  vacunasIndefinidas.push(Varicel)
+  return declassify(vacunasIndefinidas);
+}
+
+function declassify(arr) {
+  let vacunasData = arr.map(vacuna => {
+    return {
+        birthdate: vacuna.birthdate,
+        nombre: vacuna.nombre,
+        status: vacuna.status,
+        factoresDeRiesgo: vacuna.factoresDeRiesgo,
+        id: vacuna.id,
+        dosis: vacuna.dosis,
+        separacionDosis: vacuna.separacionDosis,
+        fechaVacunacion: vacuna.fechaVacunacion
+    }
+  });
+  return vacunasData
 }
 
 
 //--------------------------------------------------------
 
 function calculateAgeInMonths(birthdate) {
-    if (typeof birthdate !== 'string') {
-         birthdate = birthdate.toString();
-     }
-    const parts = birthdate.split("/");
-    const formattedBirthdate = `${parts[1]}/${parts[0]}/${parts[2]}`;
-    const date = new Date(formattedBirthdate);
-    const now = new Date();
-    const diffInMilliseconds = now - date;
-    const ageInMonths = Math.round(diffInMilliseconds / (2592000000));
-    return ageInMonths;
+  const parts = birthdate.split("/");
+  const birthYear = Number(parts[2]);
+  const birthMonth = Number(parts[1]);
+  const birthDay = Number(parts[0]);
+
+  const now = new Date();
+  const nowYear = now.getFullYear();
+  const nowMonth = now.getMonth() + 1; // January is 0 in JavaScript
+  const nowDay = now.getDate();
+
+  let ageInMonths = (nowYear - birthYear) * 12 + (nowMonth - birthMonth);
+
+  // Subtract one month if the birth day has not occurred yet in the current month
+  if (nowDay < birthDay) {
+      ageInMonths--;
+  }
+
+  return ageInMonths;
 }
+
 
 function calculateVaccinationDate(birthdate, vaccineAgeInMonths) {
     // Split the birthdate into day, month, and year
@@ -178,7 +221,54 @@ class Antigripal {
       }
     }
 }
-export default function completarArrayVacunas(birthdate) {
 
-    
+class HepatitisA {
+  constructor(birthdate) {
+      this.birthdate = birthdate
+      this.nombre = "Hepatitis A"
+      this.status = 3
+      this.factoresDeRiesgo = [2,6,8]
+      this.id = 30
+      this.dosis = [0,1]
+      this.separacionDosis = [0]
+      this.fechaVacunacion = calculateVaccinationDate(this.birthdate, 12)
+    }
 }
+
+class TripleViral { //TODO
+  constructor(birthdate) {
+      this.birthdate = birthdate
+      this.nombre = "Triple Viral"
+      this.status = 3
+      this.factoresDeRiesgo = [2,6,8] //TODO
+      this.id = 31
+      this.dosis = [0,2]
+      this.separacionDosis = [0,1] //TODO
+      this.fechaVacunacion = this.calcularFechaVacunacion() //TODO
+    }
+
+    calcularFechaVacunacion() { //TODO
+      if(calculateAgeInMonths(this.birthdate) >= 2 && this.status == 2)
+      {
+        return calculateVaccinationDate(this.birthdate, 132) 
+      }
+      else
+      {
+        return calculateVaccinationDate(this.birthdate, 3)
+      }
+    }
+}
+
+class Varicela {
+  constructor(birthdate) {
+      this.birthdate = birthdate
+      this.nombre = "Varicela"
+      this.status = 3
+      this.factoresDeRiesgo = [2,6,8]
+      this.id = 32
+      this.dosis = [0,2]
+      this.separacionDosis = [0,45]
+      this.fechaVacunacion = calculateVaccinationDate(this.birthdate, 15)
+    }
+}
+
