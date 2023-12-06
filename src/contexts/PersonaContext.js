@@ -20,7 +20,7 @@ const PersonaProvider = ({children}) => {
       vacunasPasadas, setVacunasPasadas,
       vacunasFuturas, setVacunasFuturas,
       vacunasIndefinidas, setVacunasIndefinidas,
-      uid, setUid
+      uid, setUid 
     }}>
       {children}
     </PersonaContext.Provider>

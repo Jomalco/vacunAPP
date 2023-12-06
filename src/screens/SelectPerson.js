@@ -78,7 +78,7 @@ const SelectPerson = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.buttonPersona}
             key={index}
-            onPress={() => {NavigatePersona(persona.VacunasIndefinidas); console.log(persona.VacunasIndefinidas)}}
+            onPress={() => {NavigatePersona(persona.VacunasIndefinidas);}}
           >
             <Text>{persona.username.toUpperCase()}</Text>
           </TouchableOpacity>
@@ -90,9 +90,6 @@ const SelectPerson = ({ route, navigation }) => {
           >
             <Text>AGREGAR NUEVA PERSONA</Text>
           </TouchableOpacity>
-          <FlatList>
-
-          </FlatList>
       </ScrollView>
     )
   }

@@ -13,44 +13,56 @@ import AppButton from '../microComponents/AppButton';
 
 const CreatePerson = ({ route, navigation }) => {
 
-  const [data, setData] = useState([])
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false)
   const { uid } = route.params;
   console.log(uid)
   const db = getFirestore()
   const docRef = doc(db, 'users', uid)
 
   const addDocument = () => {
-    updateDoc(docRef, {
-      Personas: arrayUnion({
-        username: inputValue,
-        birthdate: formatDate(date),
-        FactoresDeRiesgo: createRiskFactorArray(),
-        VacunasIndefinidas: data
-        })
-    })
-    .then(() => {
-      setCheck1(false);
-      setCheck2(false);
-      setCheck3(false);
-      setCheck4(false);
-      setCheck5(false);
-      setCheck6(false);
-      setCheck7(false);
-      setCheck8(false);
-      setDate(new Date())
-      inputName.current.clear()
-      console.log("documentAdded")
-    })
-    .catch((error) => {
-      console.log('Error updating document:', error);
-    });
+    if(verifyCorrectInputs())
+    {
+      updateDoc(docRef, {
+        Personas: arrayUnion({
+          username: inputValue,
+          birthdate: formatDate(date),
+          FactoresDeRiesgo: createRiskFactorArray(),
+          VacunasIndefinidas: completarArrayVacunas(formatDate(date))
+          })
+      })
+      .then(() => {
+        setCheck1(false);
+        setCheck2(false);
+        setCheck3(false);
+        setCheck4(false);
+        setCheck5(false);
+        setCheck6(false);
+        setCheck7(false);
+        setCheck8(false);
+        setDate(new Date())
+        inputName.current.clear()
+        console.log("documentAdded")
+        navigation.goBack()
+      })
+      .catch((error) => {
+        console.log('Error updating document:', error);
+      });
+    }
   }
 
-
-  const [date, setDate] = useState(new Date());
-  const [show, setShow] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-  const [isLoading, setIsLoading] = useState(false)
+  const verifyCorrectInputs = () => {
+    if(inputValue.length > 2 && inputValue.length <= 18)
+    {
+      return true
+    }
+    else
+    {
+      alert("El nombre tiene que tener entre 2 y 18 carácteres")
+    }
+  }
 
   const handleInputChange = (text) => {
     setInputValue(text);
@@ -207,7 +219,7 @@ const CreatePerson = ({ route, navigation }) => {
             width: "80vw",
             marginVertical: 10,
           }}
-          onPress={() => {console.log(completarArrayVacunas(formatDate(date))); addDocument(); navigation.goBack()}}
+          onPress={() => {addDocument()}}
         />
       </View>
        

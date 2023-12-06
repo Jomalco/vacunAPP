@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native'
 import { PersonaContext } from '../contexts/PersonaContext'
 import Vacuna from './vacunas/Vacuna'
@@ -20,11 +20,19 @@ export default function UndefinedVacunas({ navigation }) {
       }
     }, [])
   );
+ 
+  const [selectedIndexes, setSelectedIndexes] = useState([]);
+
+  const updateSelectedIndex = (id, selectedIndex) => {
+    setSelectedIndexes(prev => ({ ...prev, [id]: selectedIndex }));
+  };
+
+  console.log(selectedIndexes);
 
   return (
     <View style={styles.container}>
       {vacunasIndefinidas && vacunasIndefinidas.map((item, index) => (
-       <Vacuna key={index} {...item} />
+       <Vacuna key={item.id} {...item} updateSelectedIndex={updateSelectedIndex} />
      ))}
     </View>
   )

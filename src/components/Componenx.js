@@ -42,7 +42,6 @@ export default function Componenx({ navigation }) {
       Log Out
     </Text>
    </TouchableOpacity>
-   <UndefinedVacuna navigation={navigation}/>
  </View>
  );
 }

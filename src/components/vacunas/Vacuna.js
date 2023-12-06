@@ -44,8 +44,14 @@ const styles = StyleSheet.create({
   });
 
 function Vacuna(props) {
-//{props.dosis[0]}/{props.dosis[1]}
+  const { id, updateSelectedIndex } = props;
   const [selectedIndex, setSelectedIndex] = useState(2);
+
+  const handleSelectedIndexChange = (newSelectedIndex) => {
+    setSelectedIndex(newSelectedIndex);
+    updateSelectedIndex(id, newSelectedIndex);
+  };
+
     return (
         <>
               <View style={styles.vacunaContainer}>
@@ -63,7 +69,7 @@ function Vacuna(props) {
                       <Icon name="close" />,
                     ]}
                     selectedIndex={selectedIndex}
-                    onPress={setSelectedIndex}
+                    onPress={handleSelectedIndexChange}
                   />
                 </View>
               </View>
