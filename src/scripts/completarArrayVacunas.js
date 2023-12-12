@@ -1,28 +1,31 @@
-var vacunasPasadas = [];
-var vacunasIndefinidas = [];
-var vacunasFuturas = [];
-
 export default function completarArrayVacunas(birthdate) {
+  let vacunasPasadas = [];
+  let vacunasFuturas = [];
   let date = birthdate
   let NeumococoConjugad = new NeumococoConjugada(date)
-  vacunasIndefinidas.push(NeumococoConjugad)
+  NeumococoConjugad.status == 3 ? vacunasPasadas.push(NeumococoConjugad) : vacunasFuturas.push(NeumococoConjugad)
   let Pentavalent = new Pentavalente(date)
-  vacunasIndefinidas.push(Pentavalent)
+  Pentavalent.status == 3 ? vacunasPasadas.push(Pentavalent) : vacunasFuturas.push(Pentavalent)
   let IP = new IPV(date)
-  vacunasIndefinidas.push(IP)
+  IP.status == 3 ? vacunasPasadas.push(IP) : vacunasFuturas.push(IP)
   let Meningococ = new Meningococo(date)
-  vacunasIndefinidas.push(Meningococ)
+  Meningococ.status == 3 ? vacunasPasadas.push(Meningococ) : vacunasFuturas.push(Meningococ)
   let Antigripa = new Antigripal(date)
-  vacunasIndefinidas.push(Antigripa)
+  Antigripa.status == 3 ? vacunasPasadas.push(Antigripa) : vacunasFuturas.push(Antigripa)
   let Hepatitis = new HepatitisA(date)
-  vacunasIndefinidas.push(Hepatitis)
+  Hepatitis.status == 3 ? vacunasPasadas.push(Hepatitis) : vacunasFuturas.push(Hepatitis)
   let Rotaviru = new Rotavirus(date)
-  vacunasIndefinidas.push(Rotaviru)
+  Rotaviru.status == 3 ? vacunasPasadas.push(Rotaviru) : vacunasFuturas.push(Rotaviru)
   let TripleVira = new TripleViral(date)
-  vacunasIndefinidas.push(TripleVira)
+  TripleVira.status == 3 ? vacunasPasadas.push(TripleVira) : vacunasFuturas.push(TripleVira)
   let Varicel = new Varicela(date)
-  vacunasIndefinidas.push(Varicel)
-  return declassify(vacunasIndefinidas);
+  Varicel.status == 3 ? vacunasPasadas.push(Varicel) : vacunasFuturas.push(Varicel)
+
+  var vacunasPasadas2 = declassify(vacunasPasadas)
+  var vacunasFuturas2 = declassify(vacunasFuturas)
+  console.log(vacunasPasadas2)
+  console.log(vacunasFuturas2)
+  return { vacunasPasadas2, vacunasFuturas2 }
 }
 
 function declassify(arr) {
@@ -106,12 +109,25 @@ function calculateVaccinationDate(birthdate, vaccineAgeInMonths) {
     return day + '/' + month + '/' + year;
  }
 
+ function calculateStatus(vaccinedate) {
+  const [day, month, year] = vaccinedate.split("/");
+  const date = new Date(year, month - 1, day);
+  const currentDate = new Date();
+  date.setHours(0, 0, 0, 0);
+  currentDate.setHours(0, 0, 0, 0);
+
+  if (date < currentDate) {
+    return 3;
+  } else {
+    return 2;
+  }
+ }
 //----------------------------------------------------------------      Vacunas
 class NeumococoConjugada {
     constructor(birthdate) {
       this.birthdate = birthdate
       this.nombre = "Neumococo Conjugada"
-      this.status = 3
+      this.status = calculateStatus(this.calcularFechaVacunacion())
       this.factoresDeRiesgo = [1,4]
       this.id = 24
       this.dosis = [0,3]
@@ -134,7 +150,7 @@ class Pentavalente {
   constructor(birthdate) {
     this.birthdate = birthdate
     this.nombre = "Quíntuple/Pentavalente"
-    this.status = 3
+    this.status = calculateStatus(calculateVaccinationDate(this.birthdate, 2))
     this.factoresDeRiesgo = []
     this.id = 25
     this.dosis = [0,4]
@@ -147,7 +163,7 @@ class IPV {
   constructor(birthdate) {
     this.birthdate = birthdate
     this.nombre = "IPV"
-    this.status = 3
+    this.status = calculateStatus(calculateVaccinationDate(this.birthdate, 2))
     this.factoresDeRiesgo = []
     this.id = 26
     this.dosis = [0,4]
@@ -160,7 +176,7 @@ class Rotavirus {
   constructor(birthdate) {
     this.birthdate = birthdate
     this.nombre = "Rotavirus"
-    this.status = 3
+    this.status = calculateStatus(calculateVaccinationDate(this.birthdate, 2))
     this.factoresDeRiesgo = []
     this.id = 27
     this.dosis = [0,2]
@@ -173,7 +189,7 @@ class Meningococo {
   constructor(birthdate) {
       this.birthdate = birthdate
       this.nombre = "Meningococo ACYW"
-      this.status = 3
+      this.status = calculateStatus(this.calcularFechaVacunacion())
       this.factoresDeRiesgo = []
       this.id = 28
       this.dosis = [0,3]
@@ -202,7 +218,7 @@ class Antigripal {
   constructor(birthdate) {
       this.birthdate = birthdate
       this.nombre = "Antigripal"
-      this.status = 3
+      this.status = calculateStatus(this.calcularFechaVacunacion())
       this.factoresDeRiesgo = [2,6,8]
       this.id = 29
       this.dosis = [0,2]
@@ -226,7 +242,7 @@ class HepatitisA {
   constructor(birthdate) {
       this.birthdate = birthdate
       this.nombre = "Hepatitis A"
-      this.status = 3
+      this.status = calculateStatus(calculateVaccinationDate(this.birthdate, 12))
       this.factoresDeRiesgo = [2,6,8]
       this.id = 30
       this.dosis = [0,1]
@@ -239,7 +255,7 @@ class TripleViral { //TODO
   constructor(birthdate) {
       this.birthdate = birthdate
       this.nombre = "Triple Viral"
-      this.status = 3
+      this.status = calculateStatus(this.calcularFechaVacunacion())
       this.factoresDeRiesgo = [2,6,8] //TODO
       this.id = 31
       this.dosis = [0,2]
@@ -263,7 +279,7 @@ class Varicela {
   constructor(birthdate) {
       this.birthdate = birthdate
       this.nombre = "Varicela"
-      this.status = 3
+      this.status = calculateStatus(calculateVaccinationDate(this.birthdate, 15))
       this.factoresDeRiesgo = [2,6,8]
       this.id = 32
       this.dosis = [0,2]

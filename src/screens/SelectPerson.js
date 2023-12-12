@@ -14,7 +14,8 @@ const SelectPerson = ({ route, navigation }) => {
   const {
     vacunasPasadas, setVacunasPasadas,
     vacunasFuturas, setVacunasFuturas,
-    vacunasIndefinidas, setVacunasIndefinidas
+    vacunasIndefinidas, setVacunasIndefinidas,
+    setIndex
   } = useContext(PersonaContext)
 
   useEffect(() => {
@@ -36,9 +37,23 @@ const SelectPerson = ({ route, navigation }) => {
     }, [])
   );
 
-  function NavigatePersona(p) {
-    setVacunasIndefinidas(p)
-    navigation.navigate("UndefinedVacunas")
+  function checkVacunasPasadasStatus(vacunasPasadas) {
+    let indefVacunas = []
+    for(let vacuna of vacunasPasadas)
+    {
+      if (vacuna.status == 3)
+      {
+        indefVacunas.push(vacuna)
+      }
+    }
+    return indefVacunas
+  }
+
+  function NavigatePersona(p, index) {
+    setIndex(index)
+    console.log(index)
+    setVacunasIndefinidas(checkVacunasPasadasStatus(p))
+    navigation.replace("UndefinedVacunas")
   }
  
   const { uid } = route.params;
@@ -78,7 +93,7 @@ const SelectPerson = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.buttonPersona}
             key={index}
-            onPress={() => {NavigatePersona(persona.VacunasIndefinidas);}}
+            onPress={() => {NavigatePersona(persona.VacunasPasadas, index);}}
           >
             <Text>{persona.username.toUpperCase()}</Text>
           </TouchableOpacity>

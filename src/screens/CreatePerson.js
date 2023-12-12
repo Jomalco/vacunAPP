@@ -25,12 +25,15 @@ const CreatePerson = ({ route, navigation }) => {
   const addDocument = () => {
     if(verifyCorrectInputs())
     {
+      let { vacunasPasadas2, vacunasFuturas2 } = completarArrayVacunas(formatDate(date));
+      console.log(vacunasPasadas2)
       updateDoc(docRef, {
         Personas: arrayUnion({
           username: inputValue,
           birthdate: formatDate(date),
           FactoresDeRiesgo: createRiskFactorArray(),
-          VacunasIndefinidas: completarArrayVacunas(formatDate(date))
+          VacunasPasadas: vacunasPasadas2,
+          VacunasFuturas: vacunasFuturas2,
           })
       })
       .then(() => {
@@ -43,9 +46,9 @@ const CreatePerson = ({ route, navigation }) => {
         setCheck7(false);
         setCheck8(false);
         setDate(new Date())
-        inputName.current.clear()
         console.log("documentAdded")
         navigation.goBack()
+        inputName.current.clear()
       })
       .catch((error) => {
         console.log('Error updating document:', error);
