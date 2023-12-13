@@ -2,22 +2,22 @@ import { StyleSheet, Text, View, ScrollView, SafeAreaView, Button } from 'react-
 import React, { useContext, useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native'
 import { PersonaContext } from '../contexts/PersonaContext'
-import Vacuna from './vacunas/Vacuna'
-import { getFirestore, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-export default function UndefinedVacunas({ navigation }) {
+import Vacuna from '../components/vacunas/Vacuna'
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
+export default function VacunasFuturas({ navigation }) {
   const {
     vacunasPasadas, setVacunasPasadas,
     vacunasFuturas, setVacunasFuturas,
     vacunasIndefinidas, setVacunasIndefinidas,
-    uid, index
+    uid
   } = useContext(PersonaContext)
 
   useFocusEffect(
     React.useCallback(() => {
       setTimeout(function() {
         if (vacunasIndefinidas.length == 0) {
-          navigation.navigate("VacunAPP", {uid: uid})
+          
         }
     }, 1000);
     }, [])
@@ -27,17 +27,10 @@ export default function UndefinedVacunas({ navigation }) {
     const firestore = getFirestore();
     const docRef = doc(firestore, 'users', uid);
     const docSnap = await getDoc(docRef);
-    let user = docSnap.data();
-    console.log(user)
+    
     if (docSnap.exists()) {
-      for (let vacuna of user.Personas[index].VacunasPasadas) {
-        if (vacuna.id === 29) {
-          vacuna.status = 2;
-          break;
-        }
-      }
-      console.log(user)
-      await updateDoc(docRef, user);
+     const user = docSnap.data();
+     console.log("Personas data:", user.Personas);
     } else {
      console.log("No such document!");
     }
@@ -48,19 +41,34 @@ export default function UndefinedVacunas({ navigation }) {
 
   const updateSelectedIndex = (id, selectedIndex) => {
     setSelectedIndexes(prev => ({ ...prev, [id]: selectedIndex }));
-  };  
+  };
 
   const handleUndefinedVacunasButton = () => {
 
   }
 
+  function isDateInNextSixMonths(dateStr) {
+    let dateComponents = dateStr.split("/");
+    let rearrangedDateStr = `${dateComponents[1]}/${dateComponents[0]}/${dateComponents[2]}`;
+    let inputDate = new Date(rearrangedDateStr);
+    let currentDate = new Date();
+    let sixMonthsFromNow = new Date();
+    sixMonthsFromNow.setMonth(currentDate.getMonth() + 6);
+
+    return inputDate >= currentDate && inputDate <= sixMonthsFromNow;
+}
+
   return (
     <ScrollView>
       <SafeAreaView style={styles.container}>
       <View style={styles.vaccinesContainer}>
-        {vacunasIndefinidas && vacunasIndefinidas.map((item, index) => (
-          <Vacuna key={item.id} {...item} updateSelectedIndex={updateSelectedIndex} />
-        ))}
+        {vacunasFuturas && vacunasFuturas.map((item, index) => {
+            if(isDateInNextSixMonths(item.fechaVacunacion)){
+                return(
+                    <Vacuna key={item.id} {...item} updateSelectedIndex={updateSelectedIndex} />    
+                )
+            }
+        })}
       </View>
       <Button
             style={styles.undefinedVacunasButton}

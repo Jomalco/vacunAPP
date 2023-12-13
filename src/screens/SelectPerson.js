@@ -37,23 +37,32 @@ const SelectPerson = ({ route, navigation }) => {
     }, [])
   );
 
-  function checkVacunasPasadasStatus(vacunasPasadas) {
+  function definirVacunasPasadas(vacunasPasadas) {
     let indefVacunas = []
+    let pasadasVacunas = []
     for(let vacuna of vacunasPasadas)
     {
       if (vacuna.status == 3)
       {
         indefVacunas.push(vacuna)
       }
+      else
+      {
+        pasadasVacunas.push(vacuna)
+      }
     }
-    return indefVacunas
+    setVacunasIndefinidas(indefVacunas)
+    setVacunasPasadas(pasadasVacunas)
   }
 
-  function NavigatePersona(p, index) {
+  function NavigatePersona(pasadas, futuras, index) {
     setIndex(index)
-    console.log(index)
-    setVacunasIndefinidas(checkVacunasPasadasStatus(p))
-    navigation.replace("UndefinedVacunas")
+    setVacunasIndefinidas([])
+    setVacunasPasadas([])
+    setVacunasFuturas([])
+    definirVacunasPasadas(pasadas)
+    setVacunasFuturas(futuras)
+    navigation.navigate("UndefinedVacunas")
   }
  
   const { uid } = route.params;
@@ -93,7 +102,7 @@ const SelectPerson = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.buttonPersona}
             key={index}
-            onPress={() => {NavigatePersona(persona.VacunasPasadas, index);}}
+            onPress={() => {NavigatePersona(persona.VacunasPasadas, persona.VacunasFuturas, index);}}
           >
             <Text>{persona.username.toUpperCase()}</Text>
           </TouchableOpacity>

@@ -10,6 +10,9 @@ import {
 import Componenx from '../components/Componenx'
 import CreatePerson from './CreatePerson';
 import SelectPerson from './SelectPerson';
+import VacunasPasadas from './VacunasPasadas';
+import VacunasCercanas from './VacunasCercanas'
+import VacunasFuturas from './VacunasFuturas';
 
 import {
   getFirestore, doc, getDoc
@@ -40,7 +43,7 @@ function HomeScreen({ route }) {
       />
       <Tab.Screen
         name="PageTwo"
-        component={SelectPerson}
+        component={VacunasCercanas}
         initialParams={{ uid: uid }}
         options={{ title: 'Vacunación Cercana',
         tabBarIcon:({size, color}) => (
@@ -51,7 +54,7 @@ function HomeScreen({ route }) {
       />
       <Tab.Screen
         name="PageThree"
-        component={CreatePerson}
+        component={VacunasFuturas}
         initialParams={{ uid: uid }}
         options={{ title: 'Vacunas Futuras',
         tabBarIcon:({size, color}) => (
