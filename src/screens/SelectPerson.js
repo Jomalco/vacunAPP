@@ -62,7 +62,12 @@ const SelectPerson = ({ route, navigation }) => {
     setVacunasFuturas([])
     definirVacunasPasadas(pasadas)
     setVacunasFuturas(futuras)
-    navigation.navigate("UndefinedVacunas")
+    if (vacunasIndefinidas.length == 0) {
+      navigation.navigate("VacunAPP", {uid: uid})
+    }
+    else {
+      navigation.navigate("UndefinedVacunas")
+    }
   }
  
   const { uid } = route.params;

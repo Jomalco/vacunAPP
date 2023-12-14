@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ScrollView, SafeAreaView, Button } from 'react-
 import React, { useContext, useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native'
 import { PersonaContext } from '../contexts/PersonaContext'
-import Vacuna from '../components/vacunas/Vacuna'
+import VacunaDetalle from '../components/vacunas/VacunaDetalle'
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 export default function VacunasFuturas({ navigation }) {
@@ -59,39 +59,26 @@ export default function VacunasFuturas({ navigation }) {
 }
 
   return (
+    <View style={styles.container2}>
     <ScrollView>
       <SafeAreaView style={styles.container}>
       <View style={styles.vaccinesContainer}>
-        {vacunasFuturas && vacunasFuturas.map((item, index) => {
+      {
+        vacunasFuturas.length > 0 ? 
+          vacunasFuturas.map((item, index) => {
             if(isDateInNextSixMonths(item.fechaVacunacion)){
                 return(
-                    <Vacuna key={item.id} {...item} updateSelectedIndex={updateSelectedIndex} />    
+                    <VacunaDetalle key={item.id} {...item} updateSelectedIndex={updateSelectedIndex} />    
                 )
             }
-        })}
+          }) 
+        : 
+        <Text style={{ color: 'black', alignContent: 'center', alignItems: 'center' }}>No hay vacunas en los próximos 6 meses</Text>
+      }
       </View>
-      <Button
-            style={styles.undefinedVacunasButton}
-            title="Confirmar estado de vacunas"
-            loading={false}
-            loadingProps={{ size: 'small', color: 'white' }}
-            buttonStyle={{
-              backgroundColor: 'rgba(111, 202, 186, 1)',
-              borderRadius: 25,
-              marginTop: 10
-            }}
-            titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
-            containerStyle={{
-              marginHorizontal: 50,
-              height: 50,
-              width: "80vw",
-              borderRadius: 25,
-              marginVertical: 20
-            }}
-            onPress={() => {updateUndefinedVaccines()}}
-          />
       </SafeAreaView>
     </ScrollView>
+    </View>
   )
 }
 
@@ -101,6 +88,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'lightblue',
     paddingTop: 5 
+  },
+  container2: {
+    flex: 1,
+    backgroundColor: 'lightblue',
   },
   vaccinesContainer: {
     alignItems: 'center',

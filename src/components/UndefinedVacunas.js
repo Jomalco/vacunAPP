@@ -24,20 +24,29 @@ export default function UndefinedVacunas({ navigation }) {
   );
  
   async function updateUndefinedVaccines() {
+    console.log(Object.keys(selectedIndexes).length)
+    console.log(vacunasIndefinidas.length)
     const firestore = getFirestore();
     const docRef = doc(firestore, 'users', uid);
     const docSnap = await getDoc(docRef);
     let user = docSnap.data();
-    console.log(user)
     if (docSnap.exists()) {
-      for (let vacuna of user.Personas[index].VacunasPasadas) {
-        if (vacuna.id === 29) {
-          vacuna.status = 2;
-          break;
+      if (Object.keys(selectedIndexes).length == vacunasIndefinidas.length) {
+        for (let vacuna of user.Personas[index].VacunasPasadas) {
+          console.log(vacuna.nombre)
+          if (selectedIndexes.hasOwnProperty(vacuna.id) && selectedIndexes[vacuna.id] === 1) {
+            vacuna.status = 2;
+          } else if (selectedIndexes.hasOwnProperty(vacuna.id) && selectedIndexes[vacuna.id] === 0) {
+            vacuna.status = 1;
+          }
         }
+        await updateDoc(docRef, user).then(
+          navigation.navigate("VacunAPP", {uid: uid})
+        );
       }
-      console.log(user)
-      await updateDoc(docRef, user);
+      else {
+        alert("El estado de todas las vacunas deben ser confirmados al mismo tiempo")
+      }
     } else {
      console.log("No such document!");
     }
@@ -55,6 +64,7 @@ export default function UndefinedVacunas({ navigation }) {
   }
 
   return (
+    <View style={styles.container2}>
     <ScrollView>
       <SafeAreaView style={styles.container}>
       <View style={styles.vaccinesContainer}>
@@ -84,6 +94,7 @@ export default function UndefinedVacunas({ navigation }) {
           />
       </SafeAreaView>
     </ScrollView>
+    </View>
   )
 }
 
@@ -93,6 +104,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'lightblue',
     paddingTop: 5 
+  },
+  container2: {
+    flex: 1,
+    backgroundColor: 'lightblue',
   },
   vaccinesContainer: {
     alignItems: 'center',

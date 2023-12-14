@@ -33,7 +33,7 @@ function HomeScreen({ route }) {
     >
       <Tab.Screen
         name="PageOne"
-        component={Componenx}
+        component={VacunasPasadas}
         options={{ title: 'Vacunas Previas',
         tabBarIcon:({size, color}) => (
             <MaterialCommunityIcons name="menu-left-outline"
