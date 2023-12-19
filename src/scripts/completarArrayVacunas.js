@@ -1,31 +1,29 @@
 export default function completarArrayVacunas(birthdate) {
-  let vacunasPasadas = [];
-  let vacunasFuturas = [];
+  let arrayVacunas = [];
   let date = birthdate
   let NeumococoConjugad = new NeumococoConjugada(date)
-  NeumococoConjugad.status == 3 ? vacunasPasadas.push(NeumococoConjugad) : vacunasFuturas.push(NeumococoConjugad)
+  arrayVacunas.push(NeumococoConjugad)
   let Pentavalent = new Pentavalente(date)
-  Pentavalent.status == 3 ? vacunasPasadas.push(Pentavalent) : vacunasFuturas.push(Pentavalent)
+  arrayVacunas.push(Pentavalent)
   let IP = new IPV(date)
-  IP.status == 3 ? vacunasPasadas.push(IP) : vacunasFuturas.push(IP)
+  arrayVacunas.push(IP)
   let Meningococ = new Meningococo(date)
-  Meningococ.status == 3 ? vacunasPasadas.push(Meningococ) : vacunasFuturas.push(Meningococ)
+  arrayVacunas.push(Meningococ)
   let Antigripa = new Antigripal(date)
-  Antigripa.status == 3 ? vacunasPasadas.push(Antigripa) : vacunasFuturas.push(Antigripa)
+  arrayVacunas.push(Antigripa)
   let Hepatitis = new HepatitisA(date)
-  Hepatitis.status == 3 ? vacunasPasadas.push(Hepatitis) : vacunasFuturas.push(Hepatitis)
+  arrayVacunas.push(Hepatitis)
   let Rotaviru = new Rotavirus(date)
-  Rotaviru.status == 3 ? vacunasPasadas.push(Rotaviru) : vacunasFuturas.push(Rotaviru)
+  arrayVacunas.push(Rotaviru)
   let TripleVira = new TripleViral(date)
-  TripleVira.status == 3 ? vacunasPasadas.push(TripleVira) : vacunasFuturas.push(TripleVira)
+  arrayVacunas.push(TripleVira)
   let Varicel = new Varicela(date)
-  Varicel.status == 3 ? vacunasPasadas.push(Varicel) : vacunasFuturas.push(Varicel)
+  arrayVacunas.push(Varicel)
 
-  var vacunasPasadas2 = declassify(vacunasPasadas)
-  var vacunasFuturas2 = declassify(vacunasFuturas)
-  console.log(vacunasPasadas2)
-  console.log(vacunasFuturas2)
-  return { vacunasPasadas2, vacunasFuturas2 }
+  var arrayVacunas2 = declassify(arrayVacunas)
+
+  console.log(arrayVacunas2)
+  return  arrayVacunas2
 }
 
 function declassify(arr) {
@@ -38,7 +36,8 @@ function declassify(arr) {
         id: vacuna.id,
         dosis: vacuna.dosis,
         separacionDosis: vacuna.separacionDosis,
-        fechaVacunacion: vacuna.fechaVacunacion
+        fechaVacunacion: vacuna.fechaVacunacion,
+        MD: 0
     }
   });
   return vacunasData

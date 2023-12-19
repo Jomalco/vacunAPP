@@ -32,7 +32,7 @@ export default function UndefinedVacunas({ navigation }) {
     let user = docSnap.data();
     if (docSnap.exists()) {
       if (Object.keys(selectedIndexes).length == vacunasIndefinidas.length) {
-        for (let vacuna of user.Personas[index].VacunasPasadas) {
+        for (let vacuna of user.Personas[index].arrayVacunas) {
           console.log(vacuna.nombre)
           if (selectedIndexes.hasOwnProperty(vacuna.id) && selectedIndexes[vacuna.id] === 1) {
             vacuna.status = 2;

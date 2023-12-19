@@ -13,6 +13,7 @@ const SelectPerson = ({ route, navigation }) => {
 
   const {
     vacunasPasadas, setVacunasPasadas,
+    vacunasCercanas, setVacunasCercanas,
     vacunasFuturas, setVacunasFuturas,
     vacunasIndefinidas, setVacunasIndefinidas,
     setIndex
@@ -37,31 +38,79 @@ const SelectPerson = ({ route, navigation }) => {
     }, [])
   );
 
-  function definirVacunasPasadas(vacunasPasadas) {
+  function hasDatePassed(vaccinedate) {
+    const [day, month, year] = vaccinedate.split("/");
+    const date = new Date(year, month - 1, day);
+    const currentDate = new Date();
+    date.setHours(0, 0, 0, 0);
+    currentDate.setHours(0, 0, 0, 0);
+  
+    if (date < currentDate) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function isDateInNextSixMonths(dateStr) {
+    let dateComponents = dateStr.split("/");
+    let rearrangedDateStr = `${dateComponents[1]}/${dateComponents[0]}/${dateComponents[2]}`;
+    let inputDate = new Date(rearrangedDateStr);
+    let currentDate = new Date();
+    let sixMonthsFromNow = new Date();
+    sixMonthsFromNow.setMonth(currentDate.getMonth() + 6);
+    return inputDate >= currentDate && inputDate <= sixMonthsFromNow;
+  }
+
+  function definirVacunasPasadas(arrayVacunas) {
     let indefVacunas = []
     let pasadasVacunas = []
-    for(let vacuna of vacunasPasadas)
+    for(let vacuna of arrayVacunas)
     {
-      if (vacuna.status == 3)
+      if (hasDatePassed(vacuna.fechaVacunacion))
       {
-        indefVacunas.push(vacuna)
-      }
-      else
-      {
-        pasadasVacunas.push(vacuna)
+        if (vacuna.status == 3)
+        {
+          indefVacunas.push(vacuna)
+        }
+        else
+        {
+          pasadasVacunas.push(vacuna)
+        }
       }
     }
     setVacunasIndefinidas(indefVacunas)
     setVacunasPasadas(pasadasVacunas)
   }
 
-  function NavigatePersona(pasadas, futuras, index) {
+  function definirVacunasFuturas(arrayVacunas) {
+    let futurasVacunas = []
+    let cercanasVacunas = []
+    for(let vacuna of arrayVacunas)
+    {
+      if (!hasDatePassed(vacuna.fechaVacunacion))
+      {
+        if(!isDateInNextSixMonths(vacuna.fechaVacunacion))
+        {
+          futurasVacunas.push(vacuna)
+        }
+        else {
+          cercanasVacunas.push(vacuna)
+        }
+      }
+    }
+    setVacunasCercanas(cercanasVacunas)
+    setVacunasFuturas(futurasVacunas)
+  }
+
+  function NavigatePersona(arrayVacunas, index) {
     setIndex(index)
     setVacunasIndefinidas([])
+    setVacunasCercanas([])
     setVacunasPasadas([])
     setVacunasFuturas([])
-    definirVacunasPasadas(pasadas)
-    setVacunasFuturas(futuras)
+    definirVacunasPasadas(arrayVacunas)
+    definirVacunasFuturas(arrayVacunas)
     if (vacunasIndefinidas.length == 0) {
       navigation.navigate("VacunAPP", {uid: uid})
     }
@@ -107,7 +156,7 @@ const SelectPerson = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.buttonPersona}
             key={index}
-            onPress={() => {NavigatePersona(persona.VacunasPasadas, persona.VacunasFuturas, index);}}
+            onPress={() => {NavigatePersona(persona.arrayVacunas, index);}}
           >
             <Text>{persona.username.toUpperCase()}</Text>
           </TouchableOpacity>

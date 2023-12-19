@@ -39,10 +39,6 @@ export default function VacunasPasadas({ navigation }) {
 
   const [selectedIndexes, setSelectedIndexes] = useState([]);
 
-  const updateSelectedIndex = (id, selectedIndex) => {
-    setSelectedIndexes(prev => ({ ...prev, [id]: selectedIndex }));
-  };
-
   const handleUndefinedVacunasButton = () => {
 
   }
@@ -53,7 +49,7 @@ export default function VacunasPasadas({ navigation }) {
       <SafeAreaView style={styles.container}>
       <View style={styles.vaccinesContainer}>
         {vacunasPasadas && vacunasPasadas.map((item, index) => (
-          <VacunaDetalle key={item.id} {...item} updateSelectedIndex={updateSelectedIndex} />
+          <VacunaDetalle key={item.id} {...item} />
         ))}
       </View>
       </SafeAreaView>

@@ -7,9 +7,8 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 export default function VacunasFuturas({ navigation }) {
   const {
-    vacunasPasadas, setVacunasPasadas,
-    vacunasFuturas, setVacunasFuturas,
-    vacunasIndefinidas, setVacunasIndefinidas,
+    vacunasFuturas,
+    vacunasIndefinidas,
     uid
   } = useContext(PersonaContext)
 
@@ -22,41 +21,6 @@ export default function VacunasFuturas({ navigation }) {
     }, 1000);
     }, [])
   );
- 
-  async function updateUndefinedVaccines() {
-    const firestore = getFirestore();
-    const docRef = doc(firestore, 'users', uid);
-    const docSnap = await getDoc(docRef);
-    
-    if (docSnap.exists()) {
-     const user = docSnap.data();
-     console.log("Personas data:", user.Personas);
-    } else {
-     console.log("No such document!");
-    }
-    
-  }
-
-  const [selectedIndexes, setSelectedIndexes] = useState([]);
-
-  const updateSelectedIndex = (id, selectedIndex) => {
-    setSelectedIndexes(prev => ({ ...prev, [id]: selectedIndex }));
-  };
-
-  const handleUndefinedVacunasButton = () => {
-
-  }
-
-  function isDateInNextSixMonths(dateStr) {
-    let dateComponents = dateStr.split("/");
-    let rearrangedDateStr = `${dateComponents[1]}/${dateComponents[0]}/${dateComponents[2]}`;
-    let inputDate = new Date(rearrangedDateStr);
-    let currentDate = new Date();
-    let sixMonthsFromNow = new Date();
-    sixMonthsFromNow.setMonth(currentDate.getMonth() + 6);
-
-    return inputDate >= currentDate && inputDate <= sixMonthsFromNow;
-}
 
   return (
     <View style={styles.container2}>
@@ -64,11 +28,9 @@ export default function VacunasFuturas({ navigation }) {
       <SafeAreaView style={styles.container}>
       <View style={styles.vaccinesContainer}>
         {vacunasFuturas && vacunasFuturas.map((item, index) => {
-            if(!isDateInNextSixMonths(item.fechaVacunacion)){
-                return(
-                    <VacunaDetalle key={item.id} {...item} updateSelectedIndex={updateSelectedIndex} />    
+            return(
+                    <VacunaDetalle key={item.id} {...item} />    
                 )
-            }
         })}
       </View>
       </SafeAreaView>

@@ -4,6 +4,7 @@ import React, { createContext, useState } from 'react';
 
 const PersonaContext = createContext({
     vacunasPasadas: [],
+    vacunasCercanas: [],
     vacunasFuturas: [],
     vacunasIndefinidas: [],
     uid: '',
@@ -12,6 +13,7 @@ const PersonaContext = createContext({
 
 const PersonaProvider = ({children}) => {
   const [vacunasPasadas, setVacunasPasadas] = useState([])
+  const [vacunasCercanas, setVacunasCercanas] = useState([])
   const [vacunasFuturas, setVacunasFuturas] = useState([])
   const [vacunasIndefinidas, setVacunasIndefinidas] = useState([])
   const [uid, setUid] = useState('')
@@ -20,6 +22,7 @@ const PersonaProvider = ({children}) => {
   return(
     <PersonaContext.Provider value={{
       vacunasPasadas, setVacunasPasadas,
+      vacunasCercanas, setVacunasCercanas,
       vacunasFuturas, setVacunasFuturas,
       vacunasIndefinidas, setVacunasIndefinidas,
       uid, setUid,

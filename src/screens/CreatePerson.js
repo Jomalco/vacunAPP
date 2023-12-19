@@ -25,15 +25,13 @@ const CreatePerson = ({ route, navigation }) => {
   const addDocument = () => {
     if(verifyCorrectInputs())
     {
-      let { vacunasPasadas2, vacunasFuturas2 } = completarArrayVacunas(formatDate(date));
-      console.log(vacunasPasadas2)
+      let arrayVacunasX = completarArrayVacunas(formatDate(date));
       updateDoc(docRef, {
         Personas: arrayUnion({
           username: inputValue,
           birthdate: formatDate(date),
           FactoresDeRiesgo: createRiskFactorArray(),
-          VacunasPasadas: vacunasPasadas2,
-          VacunasFuturas: vacunasFuturas2,
+          arrayVacunas: arrayVacunasX
           })
       })
       .then(() => {
