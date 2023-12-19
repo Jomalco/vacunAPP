@@ -2,7 +2,8 @@ import { useState } from 'react';
 import {
     StyleSheet,
     Text,
-    View
+    View,
+    TouchableOpacity
   } from 'react-native';
 
 import { ButtonGroup, Icon } from '@rneui/themed';
@@ -54,12 +55,12 @@ function VacunaDetalle(props) {
 
     return (
         <>
-              <View style={styles.vacunaContainer}>
-                <View style={styles.vacunaFirstInnerContainer}>
-                  <Text style={styles.textOne}>{props.nombre}</Text>
-                  <Text style={styles.textTwo}>Dosis {props.dosis[0]+1}/{props.dosis[1]}</Text>
-                  <Text style={styles.textTwo}>Día de vacunación estimado: {props.fechaVacunacion}</Text>
-                </View>
+              <View style={styles.vacunaContainer}>     
+                  <View style={styles.vacunaFirstInnerContainer}>
+                    <Text style={styles.textOne}>{props.nombre}</Text>
+                    <Text style={styles.textTwo}>Dosis {props.dosis[0]+1}/{props.dosis[1]}</Text>
+                    <Text style={styles.textTwo}>Día de vacunación estimado: {props.fechaVacunacion}</Text>
+                  </View>
               </View>
         </>
     )

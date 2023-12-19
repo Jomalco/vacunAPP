@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, Button } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, Button, TouchableOpacity} from 'react-native'
 import React, { useContext, useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native'
 import { PersonaContext } from '../contexts/PersonaContext'
@@ -14,6 +14,7 @@ export default function VacunasFuturas({ navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
+      console.log(vacunasCercanas)
       setTimeout(function() {
         if (vacunasIndefinidas.length == 0) {
           
@@ -49,7 +50,9 @@ export default function VacunasFuturas({ navigation }) {
         vacunasCercanas.map((item, index) => {
           console.log(item)
               return(
+                <TouchableOpacity onPress={() => {navigation.navigate("VacunaDetalleScreen", { item })}}>
                   <VacunaDetalle key={item.id} {...item} />    
+                </TouchableOpacity>
               )
         })  
       }

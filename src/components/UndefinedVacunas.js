@@ -24,8 +24,6 @@ export default function UndefinedVacunas({ navigation }) {
   );
  
   async function updateUndefinedVaccines() {
-    console.log(Object.keys(selectedIndexes).length)
-    console.log(vacunasIndefinidas.length)
     const firestore = getFirestore();
     const docRef = doc(firestore, 'users', uid);
     const docSnap = await getDoc(docRef);

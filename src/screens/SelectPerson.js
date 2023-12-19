@@ -55,7 +55,7 @@ const SelectPerson = ({ route, navigation }) => {
   function isDateInNextSixMonths(dateStr) {
     let dateComponents = dateStr.split("/");
     let rearrangedDateStr = `${dateComponents[1]}/${dateComponents[0]}/${dateComponents[2]}`;
-    let inputDate = new Date(rearrangedDateStr);
+    let inputDate = new Date(parseInt(dateComponents[2]), parseInt(dateComponents[1]) - 1, parseInt(dateComponents[0]));
     let currentDate = new Date();
     let sixMonthsFromNow = new Date();
     sixMonthsFromNow.setMonth(currentDate.getMonth() + 6);
@@ -129,7 +129,6 @@ const SelectPerson = ({ route, navigation }) => {
    if (docSnap.exists()) {
      const data = docSnap.data();
      const array = data.Personas;
-     console.log(array);
      return array;
    } else {
      console.log("No such document!");

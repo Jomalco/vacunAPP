@@ -14,6 +14,7 @@ export default function VacunasFuturas({ navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
+      console.log(vacunasFuturas)
       setTimeout(function() {
         if (vacunasIndefinidas.length == 0) {
           
