@@ -3,25 +3,43 @@ import { PersonaContext } from '../contexts/PersonaContext'
 import React, { useContext, useState } from 'react'
 
 const VacunaDetalleScreen = (paramprops) => {
+    let props = paramprops.route.params.item
+
+    const [dosix, setDosix] = useState(1)
+
     const {
         index
       } = useContext(PersonaContext)
 
-    let props = paramprops.route.params.item
-    console.log(props)
+    function changeDosis (n) {
+        // n == 0 -> restar dosis
+        // n == 1 -> sumar dosis
+        if (n == 0) {
+            if(props.dosis[0] > 1) {
+                props.dosis[0] = props.dosis[0] - 1
+                setDosix(dosix-1)
+            }
+        } else if (n == 1) {
+            if(props.dosis[0] < props.dosis[1]) {
+                props.dosis[0] = props.dosis[0] + 1
+                setDosix(dosix+1)
+            }    
+        }
+    }
+    
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.text}>{props.nombre}</Text>
             <Text style={styles.textTwo}>Día de vacunación estimado: {props.fechaVacunacion}</Text>
-            <Text style={styles.textTwo}>Dosis {props.dosis[0]+1}/{props.dosis[1]}</Text>
+            <Text style={styles.textTwo}>Dosis {dosix}/{props.dosis[1]}</Text>
             <View style={{flexDirection: "row", marginTop: 10, alignContent: "center", alignItems: "center"}}>
-                <TouchableOpacity style={styles.dosisButton}>
+                <TouchableOpacity style={styles.dosisButton} onPress={() => {changeDosis(0)}}>
                     <Text>
                         -
                     </Text>
                 </TouchableOpacity>
                     <Text>Cambiar dosis</Text>
-                <TouchableOpacity style={styles.dosisButton}>
+                <TouchableOpacity style={styles.dosisButton} onPress={() => {changeDosis(1)}}>
                     <Text>
                         +
                     </Text>

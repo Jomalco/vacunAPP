@@ -4,8 +4,8 @@ import { useFocusEffect } from '@react-navigation/native'
 import { PersonaContext } from '../contexts/PersonaContext'
 import Vacuna from './vacunas/Vacuna'
 import { getFirestore, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-export default function UndefinedVacunas({ navigation }) {
 
+export default function UndefinedVacunas({ navigation }) {
   const {
     vacunasPasadas, setVacunasPasadas,
     vacunasFuturas, setVacunasFuturas,
@@ -29,7 +29,7 @@ export default function UndefinedVacunas({ navigation }) {
     const docSnap = await getDoc(docRef);
     let user = docSnap.data();
     if (docSnap.exists()) {
-      if (Object.keys(selectedIndexes).length == vacunasIndefinidas.length) {
+      if (Object.keys(selectedIndexes).length == vacunasIndefinidas.length) { //Todos los estados de las vacunas deben ser confirmados
         for (let vacuna of user.Personas[index].arrayVacunas) {
           console.log(vacuna.nombre)
           if (selectedIndexes.hasOwnProperty(vacuna.id) && selectedIndexes[vacuna.id] === 1) {

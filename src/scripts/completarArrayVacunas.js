@@ -129,7 +129,7 @@ class NeumococoConjugada {
       this.status = calculateStatus(this.calcularFechaVacunacion())
       this.factoresDeRiesgo = [1,4]
       this.id = 24
-      this.dosis = [0,3]
+      this.dosis = [1,3]
       this.separacionDosis = [0,2,8]
       this.fechaVacunacion = this.calcularFechaVacunacion()
       };
@@ -152,7 +152,7 @@ class Pentavalente {
     this.status = calculateStatus(calculateVaccinationDate(this.birthdate, 2))
     this.factoresDeRiesgo = []
     this.id = 25
-    this.dosis = [0,4]
+    this.dosis = [1,4]
     this.separacionDosis = [0,2,2,9]
     this.fechaVacunacion = calculateVaccinationDate(this.birthdate, 2)
     };
@@ -165,7 +165,7 @@ class IPV {
     this.status = calculateStatus(calculateVaccinationDate(this.birthdate, 2))
     this.factoresDeRiesgo = []
     this.id = 26
-    this.dosis = [0,4]
+    this.dosis = [1,4]
     this.separacionDosis = [0,2,2,54]
     this.fechaVacunacion = calculateVaccinationDate(this.birthdate, 2)
   };
@@ -178,7 +178,7 @@ class Rotavirus {
     this.status = calculateStatus(calculateVaccinationDate(this.birthdate, 2))
     this.factoresDeRiesgo = []
     this.id = 27
-    this.dosis = [0,2]
+    this.dosis = [1,2]
     this.separacionDosis = [0,2]
     this.fechaVacunacion = calculateVaccinationDate(this.birthdate, 2)
   };
@@ -191,7 +191,7 @@ class Meningococo {
       this.status = calculateStatus(this.calcularFechaVacunacion())
       this.factoresDeRiesgo = []
       this.id = 28
-      this.dosis = [0,3]
+      this.dosis = [1,3]
       this.separacionDosis = [0,2,10]
       this.fechaVacunacion = this.calcularFechaVacunacion()
     }
@@ -220,7 +220,7 @@ class Antigripal {
       this.status = calculateStatus(this.calcularFechaVacunacion())
       this.factoresDeRiesgo = [2,6,8]
       this.id = 29
-      this.dosis = [0,2]
+      this.dosis = [1,2]
       this.separacionDosis = [0,1]
       this.fechaVacunacion = this.calcularFechaVacunacion()
     }
@@ -244,7 +244,7 @@ class HepatitisA {
       this.status = calculateStatus(calculateVaccinationDate(this.birthdate, 12))
       this.factoresDeRiesgo = [2,6,8]
       this.id = 30
-      this.dosis = [0,1]
+      this.dosis = [1,1]
       this.separacionDosis = [0]
       this.fechaVacunacion = calculateVaccinationDate(this.birthdate, 12)
     }
@@ -257,7 +257,7 @@ class TripleViral { //TODO
       this.status = calculateStatus(this.calcularFechaVacunacion())
       this.factoresDeRiesgo = [2,6,8] //TODO
       this.id = 31
-      this.dosis = [0,2]
+      this.dosis = [1,2]
       this.separacionDosis = [0,1] //TODO
       this.fechaVacunacion = this.calcularFechaVacunacion() //TODO
     }
@@ -281,7 +281,7 @@ class Varicela {
       this.status = calculateStatus(calculateVaccinationDate(this.birthdate, 15))
       this.factoresDeRiesgo = [2,6,8]
       this.id = 32
-      this.dosis = [0,2]
+      this.dosis = [1,2]
       this.separacionDosis = [0,45]
       this.fechaVacunacion = calculateVaccinationDate(this.birthdate, 15)
     }
