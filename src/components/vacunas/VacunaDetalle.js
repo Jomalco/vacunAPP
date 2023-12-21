@@ -58,7 +58,7 @@ function VacunaDetalle(props) {
               <View style={styles.vacunaContainer}>     
                   <View style={styles.vacunaFirstInnerContainer}>
                     <Text style={styles.textOne}>{props.nombre}</Text>
-                    <Text style={styles.textTwo}>Dosis {props.dosis[0]+1}/{props.dosis[1]}</Text>
+                    <Text style={styles.textTwo}>Dosis {props.dosis[0]}/{props.dosis[1]}</Text>
                     <Text style={styles.textTwo}>Día de vacunación estimado: {props.fechaVacunacion}</Text>
                   </View>
               </View>

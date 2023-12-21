@@ -1,15 +1,35 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Button } from 'react-native'
 import { PersonaContext } from '../contexts/PersonaContext'
 import React, { useContext, useState } from 'react'
+import { getFirestore, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 const VacunaDetalleScreen = (paramprops) => {
     let props = paramprops.route.params.item
 
-    const [dosix, setDosix] = useState(1)
+    const [dosix, setDosix] = useState(props.dosis[0])
 
     const {
-        index
+        index, uid
       } = useContext(PersonaContext)
+
+    async function applyChanges() {
+        const firestore = getFirestore();
+        const docRef = doc(firestore, 'users', uid);
+        const docSnap = await getDoc(docRef);
+        let user = docSnap.data();
+        if (docSnap.exists()) {
+            for (let vacuna of user.Personas[index].arrayVacunas) {
+              if (vacuna.id == props.id) {
+                vacuna.dosis[0] = dosix;
+              } 
+            }
+            console.log(user.Personas[index].arrayVacunas)
+            await updateDoc(docRef, user)
+        } else {
+         console.log("No such document!");
+        }
+        
+      }
 
     function changeDosis (n) {
         // n == 0 -> restar dosis
@@ -25,6 +45,7 @@ const VacunaDetalleScreen = (paramprops) => {
                 setDosix(dosix+1)
             }    
         }
+        console.log(props)
     }
     
     return (
@@ -44,6 +65,27 @@ const VacunaDetalleScreen = (paramprops) => {
                         +
                     </Text>
                 </TouchableOpacity>
+            </View>
+            <View>
+            <Button
+                style={{
+                    marginHorizontal: 50,
+                    height: 50,
+                    width: "80vw",
+                    borderRadius: 25,
+                    marginVertical: 50
+                    }}
+                title="Aplicar cambios"
+                loading={true}
+                loadingProps={{ size: 'small', color: 'white' }}
+                buttonStyle={{
+                backgroundColor: 'rgba(111, 202, 186, 1)',
+                borderRadius: 25,
+                marginTop: 10
+                }}
+                titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
+                onPress={() => {applyChanges()}}
+            />
             </View>
         </SafeAreaView>
       );
