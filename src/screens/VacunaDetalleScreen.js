@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Button } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native'
 import { PersonaContext } from '../contexts/PersonaContext'
 import React, { useContext, useState } from 'react'
+import { Input } from '@rneui/themed';
 import { getFirestore, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 const VacunaDetalleScreen = (paramprops) => {
@@ -8,28 +9,59 @@ const VacunaDetalleScreen = (paramprops) => {
 
     const [dosix, setDosix] = useState(props.dosis[0])
 
+    const [inputValue, setInputValue] = useState('');
+    const inputName = React.createRef();
+    const handleInputChange = (text) => {
+        setInputValue(text);
+      };
+
     const {
         index, uid
       } = useContext(PersonaContext)
 
     async function applyChanges() {
+        console.log(inputValue)
         const firestore = getFirestore();
-        const docRef = doc(firestore, 'users', uid);
-        const docSnap = await getDoc(docRef);
+        const userRef = doc(firestore, 'users', uid);
+        const medicRef = doc(firestore, 'medicos', inputValue)
+        const docSnap = await getDoc(userRef);
+        const docSnap2 = await getDoc(medicRef);
         let user = docSnap.data();
+        let medic = docSnap2.data();
+        console.log(medic)
         if (docSnap.exists()) {
-            for (let vacuna of user.Personas[index].arrayVacunas) {
-              if (vacuna.id == props.id) {
-                vacuna.dosis[0] = dosix;
-              } 
+            if (medic == undefined) {
+                alert("El médico ingresado no existe")
+            }       
+            else {
+                for (let vacuna of user.Personas[index].arrayVacunas) {
+                  if (vacuna.id == props.id) {
+                    vacuna.dosis[0] = dosix;
+                  } 
+                }
+                console.log(user.Personas[index].arrayVacunas)
+                await updateDoc(userRef, user)
+                alert("Los cambios fueron aplicados correctamente")
             }
-            console.log(user.Personas[index].arrayVacunas)
-            await updateDoc(docRef, user)
         } else {
          console.log("No such document!");
         }
         
       }
+
+    function defineStatusText (status) {
+        if (status == 1) {
+            return "Vacuna no aplicada"
+        } else if (status == 2) {
+            return "Vacuna no aplicada"
+        } else if (status == 3) {
+            return "Vacuna status 3"
+        }
+    }      
+
+    function aplicarVacuna() {
+        
+    }
 
     function changeDosis (n) {
         // n == 0 -> restar dosis
@@ -51,6 +83,7 @@ const VacunaDetalleScreen = (paramprops) => {
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.text}>{props.nombre}</Text>
+            <Text style={styles.textTwo}>{defineStatusText(props.status)}</Text>
             <Text style={styles.textTwo}>Día de vacunación estimado: {props.fechaVacunacion}</Text>
             <Text style={styles.textTwo}>Dosis {dosix}/{props.dosis[1]}</Text>
             <View style={{flexDirection: "row", marginTop: 10, alignContent: "center", alignItems: "center"}}>
@@ -66,26 +99,27 @@ const VacunaDetalleScreen = (paramprops) => {
                     </Text>
                 </TouchableOpacity>
             </View>
-            <View>
-            <Button
+            <View style={styles.containerApply}>
+                <Input
+                ref={inputName}
+                label="Agregar nombre"
+                onChangeText={handleInputChange}
+                />
+                <TouchableOpacity
                 style={{
                     marginHorizontal: 50,
                     height: 50,
                     width: "80vw",
                     borderRadius: 25,
-                    marginVertical: 50
-                    }}
-                title="Aplicar cambios"
-                loading={true}
-                loadingProps={{ size: 'small', color: 'white' }}
-                buttonStyle={{
-                backgroundColor: 'rgba(111, 202, 186, 1)',
-                borderRadius: 25,
-                marginTop: 10
+                    marginVertical: 50,
+                    backgroundColor: 'rgba(200, 157, 238, 0.71)',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                 }}
-                titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
                 onPress={() => {applyChanges()}}
-            />
+                >
+                    <Text style={{ fontWeight: 'bold', fontSize: 23, color: 'white' }}>Aplicar cambios</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
       );
@@ -118,6 +152,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginHorizontal: 5
+    },
+    containerApply: {
+        marginTop: 50,
     }
 });
 
