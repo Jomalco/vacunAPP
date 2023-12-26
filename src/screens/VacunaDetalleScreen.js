@@ -19,8 +19,7 @@ const VacunaDetalleScreen = (paramprops) => {
         index, uid
       } = useContext(PersonaContext)
 
-    async function applyChanges() {
-        console.log(inputValue)
+    async function applyChanges(m) {
         const firestore = getFirestore();
         const userRef = doc(firestore, 'users', uid);
         const medicRef = doc(firestore, 'medicos', inputValue)
@@ -28,7 +27,15 @@ const VacunaDetalleScreen = (paramprops) => {
         const docSnap2 = await getDoc(medicRef);
         let user = docSnap.data();
         let medic = docSnap2.data();
-        console.log(medic)
+        
+        switch (m) {
+            case 0:
+                medic = undefined
+                break;
+            case 1:
+                medic = medic
+                break;
+        }
         if (docSnap.exists()) {
             if (medic == undefined) {
                 alert("El médico ingresado no existe")
@@ -47,7 +54,7 @@ const VacunaDetalleScreen = (paramprops) => {
          console.log("No such document!");
         }
         
-      }
+    }
 
     function defineStatusText (status) {
         if (status == 1) {
@@ -60,18 +67,18 @@ const VacunaDetalleScreen = (paramprops) => {
     }      
 
     function aplicarVacuna() {
-        
+
     }
 
-    function changeDosis (n) {
-        // n == 0 -> restar dosis
-        // n == 1 -> sumar dosis
-        if (n == 0) {
+    function changeDosis (m) {
+        // m == 0 -> resta dosis
+        // m == 1 -> suma dosis
+        if (m == 0) {
             if(props.dosis[0] > 1) {
                 props.dosis[0] = props.dosis[0] - 1
                 setDosix(dosix-1)
             }
-        } else if (n == 1) {
+        } else if (m == 1) {
             if(props.dosis[0] < props.dosis[1]) {
                 props.dosis[0] = props.dosis[0] + 1
                 setDosix(dosix+1)
@@ -86,23 +93,60 @@ const VacunaDetalleScreen = (paramprops) => {
             <Text style={styles.textTwo}>{defineStatusText(props.status)}</Text>
             <Text style={styles.textTwo}>Día de vacunación estimado: {props.fechaVacunacion}</Text>
             <Text style={styles.textTwo}>Dosis {dosix}/{props.dosis[1]}</Text>
-            <View style={{flexDirection: "row", marginTop: 10, alignContent: "center", alignItems: "center"}}>
-                <TouchableOpacity style={styles.dosisButton} onPress={() => {changeDosis(0)}}>
-                    <Text>
-                        -
-                    </Text>
-                </TouchableOpacity>
-                    <Text>Cambiar dosis</Text>
-                <TouchableOpacity style={styles.dosisButton} onPress={() => {changeDosis(1)}}>
-                    <Text>
-                        +
-                    </Text>
-                </TouchableOpacity>
-            </View>
+            {dosix == props.dosis[1] 
+                ? 
+                <View style={styles.dosisCompletadaContainer}>
+                    <TouchableOpacity
+                    style={{
+                        marginHorizontal: 50,
+                        height: 50,
+                        width: "40vw",
+                        borderRadius: 25,
+                        marginVertical: 10,
+                        backgroundColor: 'rgba(200, 157, 238, 0.71)',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingHorizontal: 20
+                    }}
+                    onPress={() => {console.log("Vacuna finalizada")}}
+                    >
+                        <Text style={{ fontWeight: 'bold', fontSize: 23, color: 'white' }}>Confirmar vacuna como aplicada</Text>
+                    </TouchableOpacity>
+                    <View style={{flexDirection: "row", marginTop: 10, alignContent: "center", alignItems: "center"}}>
+                        <TouchableOpacity style={styles.dosisButton} onPress={() => {changeDosis(0)}}>
+                            <Text>
+                                -
+                            </Text>
+                        </TouchableOpacity>
+                            <Text>Cambiar dosis</Text>
+                        <TouchableOpacity style={styles.dosisButton} onPress={() => {changeDosis(1)}}>
+                            <Text>
+                                +
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                : 
+                <View style={{flexDirection: "row", marginTop: 10, alignContent: "center", alignItems: "center"}}>
+                    <TouchableOpacity style={styles.dosisButton} onPress={() => {changeDosis(0)}}>
+                        <Text>
+                            -
+                        </Text>
+                    </TouchableOpacity>
+                        <Text>Cambiar dosis</Text>
+                    <TouchableOpacity style={styles.dosisButton} onPress={() => {changeDosis(1)}}>
+                        <Text>
+                            +
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            }
+            
             <View style={styles.containerApply}>
                 <Input
                 ref={inputName}
-                label="Agregar nombre"
+                label="Código de confirmación del médico"
+                placeholder="Ingresar código aqui"
                 onChangeText={handleInputChange}
                 />
                 <TouchableOpacity
@@ -115,6 +159,7 @@ const VacunaDetalleScreen = (paramprops) => {
                     backgroundColor: 'rgba(200, 157, 238, 0.71)',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    paddingHorizontal: 20
                 }}
                 onPress={() => {applyChanges()}}
                 >
@@ -154,7 +199,14 @@ const styles = StyleSheet.create({
         marginHorizontal: 5
     },
     containerApply: {
+        flex: 1,
+        width: "90%",
         marginTop: 50,
+    },
+    dosisCompletadaContainer: {
+        flex: 1,
+        alignContent: "center",
+        alignItems: "center",
     }
 });
 

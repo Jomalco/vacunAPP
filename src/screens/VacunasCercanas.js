@@ -67,12 +67,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'lightblue',
     paddingTop: 5 
   },
   container2: {
     flex: 1,
-    backgroundColor: 'lightblue',
+    backgroundColor: 'rgba(240, 255, 255, 1)',
   },
   vaccinesContainer: {
     alignItems: 'center',

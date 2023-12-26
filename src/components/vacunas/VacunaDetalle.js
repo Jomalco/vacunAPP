@@ -11,18 +11,19 @@ import { ButtonGroup, Icon } from '@rneui/themed';
 const styles = StyleSheet.create({
     vacunaContainer: {
       flexDirection: "row",
-      borderRadius: 20,
-      backgroundColor: "lightgrey",
-      borderColor: "grey",
+      borderRadius: 10,
+      backgroundColor: "rgba(133, 190, 192, 0.23)",
+      //borderColor: "rgba(224, 252, 253, 1)",
+      borderColor: "rgba(133, 190, 192, 1)",
       borderWidth: 2,
       width: "95%",
       height: "auto",
       padding: 10,
-      shadowColor: 'grey',
-      shadowOpacity: 1,
+      shadowColor: 'rgba(206, 237, 238, 1)',
+      shadowOpacity: 0,
       elevation: 1,
-      shadowRadius: 10 ,
-      shadowOffset : { width: 1, height: 2},
+      shadowRadius: 0 ,
+      shadowOffset : { width: 0.5 , height: 0.5},
       marginTop: 10
     },
     vacunaFirstInnerContainer: {

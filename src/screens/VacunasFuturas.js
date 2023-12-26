@@ -25,17 +25,23 @@ export default function VacunasFuturas({ navigation }) {
 
   return (
     <View style={styles.container2}>
-    <ScrollView>
-      <SafeAreaView style={styles.container}>
-      <View style={styles.vaccinesContainer}>
-        {vacunasFuturas && vacunasFuturas.map((item, index) => {
-            return(
-                    <VacunaDetalle key={item.id} {...item} />    
-                )
-        })}
+      {vacunasFuturas.length < 1 ? 
+      <View style={{alignContent: "center", alignItems: "center", height: "100%"}}>
+        <Text style={{ color: 'black' }}>No hay vacunas futuras</Text>
       </View>
-      </SafeAreaView>
-    </ScrollView>
+      :
+      <ScrollView>
+        <SafeAreaView style={styles.container}>
+        <View style={styles.vaccinesContainer}>
+          {vacunasFuturas && vacunasFuturas.map((item, index) => {
+              return(
+                      <VacunaDetalle key={item.id} {...item} />    
+                  )
+          })}
+        </View>
+        </SafeAreaView>
+      </ScrollView>
+      }
     </View>
   )
 }
@@ -44,12 +50,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'lightblue',
     paddingTop: 5 
   },
   container2: {
     flex: 1,
-    backgroundColor: 'lightblue',
+    backgroundColor: 'rgba(240, 255, 255, 1)',
   },
   vaccinesContainer: {
     alignItems: 'center',

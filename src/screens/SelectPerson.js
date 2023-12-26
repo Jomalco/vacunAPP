@@ -157,7 +157,7 @@ const SelectPerson = ({ route, navigation }) => {
             key={index}
             onPress={() => {NavigatePersona(persona.arrayVacunas, index);}}
           >
-            <Text>{persona.username.toUpperCase()}</Text>
+            <Text style={styles.text}>{persona.username.toUpperCase()}</Text>
           </TouchableOpacity>
           ))}
           <TouchableOpacity
@@ -165,7 +165,7 @@ const SelectPerson = ({ route, navigation }) => {
             key={"agregarPersona"}
             onPress={() => navigation.navigate("CreatePerson", { uid: uid })}
           >
-            <Text>AGREGAR NUEVA PERSONA</Text>
+            <Text style={styles.text}>AGREGAR NUEVA PERSONA</Text>
           </TouchableOpacity>
       </ScrollView>
     )
@@ -179,7 +179,7 @@ const SelectPerson = ({ route, navigation }) => {
             key={"agregarPersona"}
             onPress={() => navigation.navigate("CreatePerson", { uid: uid })}
           >
-            <Text>AGREGAR NUEVA PERSONA</Text>
+            <Text style={styles.text}>AGREGAR NUEVA PERSONA</Text>
         </TouchableOpacity>
       </View>
     )
@@ -195,9 +195,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     padding: 20,
     borderRadius: 4,
-    borderWidth: 1,
-    borderColor: 'green',
-    backgroundColor: 'lightblue',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: 'rgba(83, 191, 243, 0.8)',
+    backgroundColor: 'rgba(39, 178, 245, 0.8)',
   },
   buttonAgregarPersona:{
     marginHorizontal: 20,
@@ -205,9 +206,9 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: 'green',
+    borderColor: 'rgba(39, 178, 245, 0.8)',
     fontStyle: 'bold',
-    backgroundColor: 'lightgreen',
+    backgroundColor: 'rgba(208, 238, 253, 0.8)',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -215,5 +216,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  text: {
+    fontFamily: "Arial"
   }
 })
