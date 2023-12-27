@@ -6,7 +6,6 @@ import { getFirestore, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore
 
 const VacunaDetalleScreen = ({route, navigation}) => {
     let props = route.params.item;
-    console.log(props)
 
     const [dosix, setDosix] = useState(props.dosis[0])
 
@@ -79,7 +78,8 @@ const VacunaDetalleScreen = ({route, navigation}) => {
 
         //m == 1 -> aplicar cambios
         //m == 2 -> reiniciar vacuna
-        
+        console.log(vacunasPasadas)
+        console.log(vacunasCercanas)
             if(m==1) {
                 if (docSnap.exists()) {
                     if (medic == undefined) {
@@ -88,16 +88,24 @@ const VacunaDetalleScreen = ({route, navigation}) => {
                     else if (dosix == props.dosis[1]) {
                         for (let vacuna of user.Personas[index].arrayVacunas) {
                             if (vacuna.id == props.id) {
-                                console.log(vacuna)
+                                console.log(vacuna.nombre)
                                 vacuna.dosis[0] = vacuna.dosis[1];
                                 vacuna.fechaVacunacion = currentDay();
                                 vacuna.status = 1;
                                 vacuna.MD = medic.matricula
-                                setVacunasPasadas(vacunasPasadas.filter(vac => vac.id != props.id))
-                                setVacunasCercanas(vacunasCercanas.filter(vac => vac.id != props.id))   
-                                setVacunasFuturas(vacunasFuturas.filter(vac => vac.id != props.id))
+                                let newVacPas = vacunasPasadas.filter(vac => vac.id !== props.id)
+                                setVacunasPasadas(newVacPas)
+                                let newVacCer = vacunasCercanas.filter(vac => vac.id !== props.id)
+                                setVacunasCercanas(newVacCer)
+                                let newVacFut = vacunasFuturas.filter(vac => vac.id !== props.id)   
+                                setVacunasFuturas(newVacFut)
+                                console.log([...vacunasPasadas, vacuna])
                                 setVacunasPasadas([...vacunasPasadas, vacuna])
-                                navigation.navigate(("VacunAPP"), {uid: uid})
+                                console.log(vacunasPasadas)
+                                console.log(vacunasCercanas)
+                                setTimeout(() => {
+                                    navigation.navigate(("VacunAPP"), {uid: uid})
+                                }, 1000);
                             } 
                         } 
                     }
@@ -122,6 +130,15 @@ const VacunaDetalleScreen = ({route, navigation}) => {
                             vacuna.dosis[0] = 1;
                             vacuna.fechaVacunacion = "Vacuna reiniciada";
                             vacuna.status = 2;
+                            setVacunasPasadas(vacunasPasadas.filter(vac => vac.id !== props.id))
+                            setVacunasPasadas([...vacunasPasadas, vacuna])
+                            console.log(vacunasPasadas)
+                            console.log(vacunasCercanas)
+                            setTimeout(() => {
+                                navigation.navigate(("VacunAPP"), {uid: uid})
+                            }, 1000);
+                            
+                            
                         } 
                     }
                     await updateDoc(userRef, user)

@@ -15,12 +15,9 @@ export default function VacunasPasadas({ navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      setTimeout(function() {
-        if (vacunasIndefinidas.length == 0) {
-          
-        }
-    }, 1000);
-    }, [])
+      console.log(vacunasPasadas)
+      setVacunasPasadas(vacunasPasadas)
+    }, vacunasPasadas)
   );
  
   async function updateUndefinedVaccines() {

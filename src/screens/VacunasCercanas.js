@@ -7,7 +7,7 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 export default function VacunasFuturas({ navigation }) {
   const {
-    vacunasCercanas,
+    setVacunasCercanas, vacunasCercanas,
     vacunasIndefinidas,
     uid
   } = useContext(PersonaContext)
@@ -15,12 +15,8 @@ export default function VacunasFuturas({ navigation }) {
   useFocusEffect(
     React.useCallback(() => {
       console.log(vacunasCercanas)
-      setTimeout(function() {
-        if (vacunasIndefinidas.length == 0) {
-          
-        }
-    }, 1000);
-    }, [])
+      setVacunasCercanas(vacunasCercanas)
+    }, vacunasCercanas)
   );
  
   async function checkIfAnyVaccineDateHasPassed() {

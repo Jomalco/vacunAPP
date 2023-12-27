@@ -37,7 +37,7 @@ function declassify(arr) {
         dosis: vacuna.dosis,
         separacionDosis: vacuna.separacionDosis,
         fechaVacunacion: vacuna.fechaVacunacion,
-        MD: 0
+        MD: "none"
     }
   });
   return vacunasData
