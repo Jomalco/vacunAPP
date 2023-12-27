@@ -48,9 +48,8 @@ export default function VacunasFuturas({ navigation }) {
         </View>
         :
         vacunasCercanas.map((item, index) => {
-          console.log(item)
               return(
-                <TouchableOpacity onPress={() => {navigation.navigate("VacunaDetalleScreen", { item })}}>
+                <TouchableOpacity onPress={() => {navigation.navigate("VacunaDetalleScreen", { item, navigation })}}>
                   <VacunaDetalle key={item.id} {...item} />    
                 </TouchableOpacity>
               )

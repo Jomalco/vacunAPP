@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import {
   getFirestore, doc, getDoc
 } from 'firebase/firestore'
+import { auth } from '../firebase';
 import { useEffect, useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native'
 import { PersonaContext } from '../contexts/PersonaContext'
@@ -44,8 +45,10 @@ const SelectPerson = ({ route, navigation }) => {
     const currentDate = new Date();
     date.setHours(0, 0, 0, 0);
     currentDate.setHours(0, 0, 0, 0);
-  
-    if (date < currentDate) {
+    if (vaccinedate == "Vacuna reiniciada") {
+      return true;
+    }
+    if (date <= currentDate) {
       return true;
     } else {
       return false;
@@ -167,6 +170,11 @@ const SelectPerson = ({ route, navigation }) => {
           >
             <Text style={styles.text}>AGREGAR NUEVA PERSONA</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonLogOut} onPress={() => {auth.signOut(); setTimeout(() => {navigation.navigate("LoginScreen")},300);}}>
+            <Text>
+              CERRAR SESION
+            </Text>
+        </TouchableOpacity>
       </ScrollView>
     )
   }
@@ -180,6 +188,11 @@ const SelectPerson = ({ route, navigation }) => {
             onPress={() => navigation.navigate("CreatePerson", { uid: uid })}
           >
             <Text style={styles.text}>AGREGAR NUEVA PERSONA</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonLogOut} onPress={() => {auth.signOut(); setTimeout(() => {navigation.navigate("LoginScreen")},300);}}>
+          <Text>
+            CERRAR SESION
+          </Text>
         </TouchableOpacity>
       </View>
     )
@@ -209,6 +222,18 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(39, 178, 245, 0.8)',
     fontStyle: 'bold',
     backgroundColor: 'rgba(208, 238, 253, 0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonLogOut:{
+    marginHorizontal: 20,
+    marginVertical: 10,
+    padding: 20,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: 'rgba(222, 20, 20, 1)',
+    fontStyle: 'bold',
+    backgroundColor: 'rgba(243, 88, 88, 0.72)',
     justifyContent: 'center',
     alignItems: 'center',
   },

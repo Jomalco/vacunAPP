@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, Button } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, Button, TouchableOpacity } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native'
 import { PersonaContext } from '../contexts/PersonaContext'
@@ -53,9 +53,13 @@ export default function VacunasPasadas({ navigation }) {
       <ScrollView>
         <SafeAreaView style={styles.container}>
           <View style={styles.vaccinesContainer}>
-            {vacunasPasadas && vacunasPasadas.map((item, index) => (
-              <VacunaDetalle key={item.id} {...item} />
-            ))}
+            {vacunasPasadas.map((item, index) => {
+                          return(
+                            <TouchableOpacity onPress={() => {navigation.navigate("VacunaDetalleScreen", { item, navigation })}}>
+                              <VacunaDetalle key={item.id} {...item} />
+                            </TouchableOpacity>
+                          )
+            })}
           </View>
         </SafeAreaView>
       </ScrollView>
