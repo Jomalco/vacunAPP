@@ -73,8 +73,8 @@ const VacunaDetalleScreen = ({route, navigation}) => {
         const medicRef = doc(firestore, 'medicos', inputValue)
         const docSnap = await getDoc(userRef);
         const docSnap2 = await getDoc(medicRef);
-        let user = docSnap.data();
-        let medic = docSnap2.data();
+        var user = docSnap.data();
+        var medic = docSnap2.data();
 
         //m == 1 -> aplicar cambios
         //m == 2 -> reiniciar vacuna
@@ -96,7 +96,13 @@ const VacunaDetalleScreen = ({route, navigation}) => {
                                 status: 1,
                                 MD: medic.matricula
                             };
-        
+                            
+                            vacuna.dosis[0] = vacuna.dosis[1]
+                            vacuna.fechaVacunacion = currentDay()
+                            vacuna.status = 1
+                            vacuna.MD = medic.matricula
+                            
+                            console.log(vacuna)
                             // Create new arrays without the current vacuna
                             let newVacPas = vacunasPasadas.filter(vac => vac.id !== props.id)
                             let newVacCer = vacunasCercanas.filter(vac => vac.id !== props.id)
@@ -124,6 +130,7 @@ const VacunaDetalleScreen = ({route, navigation}) => {
                         } 
                     }
                 }
+                console.log(user.Personas[index].arrayVacunas)
                 await updateDoc(userRef, user)
                 alert("Los cambios fueron aplicados correctamente")    
                 }
