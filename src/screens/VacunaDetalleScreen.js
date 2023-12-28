@@ -101,7 +101,7 @@ const VacunaDetalleScreen = ({route, navigation}) => {
                             vacuna.fechaVacunacion = currentDay()
                             vacuna.status = 1
                             vacuna.MD = medic.matricula
-                            
+
                             console.log(vacuna)
                             // Create new arrays without the current vacuna
                             let newVacPas = vacunasPasadas.filter(vac => vac.id !== props.id)
@@ -115,8 +115,6 @@ const VacunaDetalleScreen = ({route, navigation}) => {
                             setVacunasPasadas(newVacPas)
                             setVacunasCercanas(newVacCer)
                             setVacunasFuturas(newVacFut)
-                            console.log(vacunasPasadas)
-                            console.log(vacunasCercanas)
                             setTimeout(() => {
                                 navigation.navigate(("VacunAPP"), {uid: uid})
                             }, 1000);
@@ -140,24 +138,39 @@ const VacunaDetalleScreen = ({route, navigation}) => {
             }
             else if (m==2) {
                 if (docSnap.exists()) {
+                    if (medic == undefined) {
+                        alert("El médico ingresado no existe")
+                    }
+                    else {
                     for (let vacuna of user.Personas[index].arrayVacunas) {
                         if (vacuna.id == props.id) {
+
+                            const updatedVacuna = {
+                                ...vacuna,
+                                dosis: [1, vacuna.dosis[1]],
+                                fechaVacunacion: "Vacuna reiniciada",
+                                status: 2,
+                                MD: "none"
+                            };
+
                             vacuna.dosis[0] = 1;
                             vacuna.fechaVacunacion = "Vacuna reiniciada";
                             vacuna.status = 2;
-                            setVacunasPasadas(vacunasPasadas.filter(vac => vac.id !== props.id))
-                            setVacunasPasadas([...vacunasPasadas, vacuna])
-                            console.log(vacunasPasadas)
-                            console.log(vacunasCercanas)
+                            vacuna.MD = "none";
+
+                            let newVacPas = vacunasPasadas.filter(vac => vac.id !== props.id)
+                            newVacPas = [...newVacPas, updatedVacuna];
+
+                            setVacunasPasadas(newVacPas)
+                            
                             setTimeout(() => {
                                 navigation.navigate(("VacunAPP"), {uid: uid})
-                            }, 1000);
-                            
-                            
+                            }, 1000); 
                         } 
                     }
                     await updateDoc(userRef, user)
-                    alert("La vacuna fue reiniciada correctamente")    
+                    alert("La vacuna fue reiniciada correctamente") 
+                    }   
                 }
                 else {
                     console.log("No such document!");
