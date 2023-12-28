@@ -17,7 +17,10 @@ export default function VacunasPasadas({ navigation }) {
     React.useCallback(() => {
       console.log(vacunasPasadas)
       setVacunasPasadas(vacunasPasadas)
-    }, vacunasPasadas)
+      return () => {
+        // Cleanup code here
+      };
+    }, [vacunasPasadas])
   );
  
   async function updateUndefinedVaccines() {

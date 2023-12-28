@@ -80,44 +80,52 @@ const VacunaDetalleScreen = ({route, navigation}) => {
         //m == 2 -> reiniciar vacuna
         console.log(vacunasPasadas)
         console.log(vacunasCercanas)
-            if(m==1) {
-                if (docSnap.exists()) {
-                    if (medic == undefined) {
-                        alert("El médico ingresado no existe")
-                    }       
-                    else if (dosix == props.dosis[1]) {
-                        for (let vacuna of user.Personas[index].arrayVacunas) {
-                            if (vacuna.id == props.id) {
-                                console.log(vacuna.nombre)
-                                vacuna.dosis[0] = vacuna.dosis[1];
-                                vacuna.fechaVacunacion = currentDay();
-                                vacuna.status = 1;
-                                vacuna.MD = medic.matricula
-                                let newVacPas = vacunasPasadas.filter(vac => vac.id !== props.id)
-                                setVacunasPasadas(newVacPas)
-                                let newVacCer = vacunasCercanas.filter(vac => vac.id !== props.id)
-                                setVacunasCercanas(newVacCer)
-                                let newVacFut = vacunasFuturas.filter(vac => vac.id !== props.id)   
-                                setVacunasFuturas(newVacFut)
-                                console.log([...vacunasPasadas, vacuna])
-                                setVacunasPasadas([...vacunasPasadas, vacuna])
-                                console.log(vacunasPasadas)
-                                console.log(vacunasCercanas)
-                                setTimeout(() => {
-                                    navigation.navigate(("VacunAPP"), {uid: uid})
-                                }, 1000);
-                            } 
+        if(m==1) {
+            if (docSnap.exists()) {
+                if (medic == undefined) {
+                    alert("El médico ingresado no existe")
+                }       
+                else if (dosix == props.dosis[1]) {
+                    for (let vacuna of user.Personas[index].arrayVacunas) {
+                        if (vacuna.id == props.id) {
+                            // Create a new object with updated properties
+                            const updatedVacuna = {
+                                ...vacuna,
+                                dosis: [vacuna.dosis[1], vacuna.dosis[1]],
+                                fechaVacunacion: currentDay(),
+                                status: 1,
+                                MD: medic.matricula
+                            };
+        
+                            // Create new arrays without the current vacuna
+                            let newVacPas = vacunasPasadas.filter(vac => vac.id !== props.id)
+                            let newVacCer = vacunasCercanas.filter(vac => vac.id !== props.id)
+                            let newVacFut = vacunasFuturas.filter(vac => vac.id !== props.id)   
+                
+                            // Add the updated vacuna to the end of the newVacPas array
+                            newVacPas = [...newVacPas, updatedVacuna];
+                
+                            // Set the new arrays in state
+                            setVacunasPasadas(newVacPas)
+                            setVacunasCercanas(newVacCer)
+                            setVacunasFuturas(newVacFut)
+                            console.log(vacunasPasadas)
+                            console.log(vacunasCercanas)
+                            setTimeout(() => {
+                                navigation.navigate(("VacunAPP"), {uid: uid})
+                            }, 1000);
+                        } 
+                    } 
+                }
+                else {
+                    for (let vacuna of user.Personas[index].arrayVacunas) {
+                        if (vacuna.id == props.id) {
+                            vacuna.dosis[0] = dosix
                         } 
                     }
-                    else {
-                            for (let vacuna of user.Personas[index].arrayVacunas) {
-                                if (vacuna.id == props.id) {
-                                    vacuna.dosis[0] = dosix
-                                } 
-                            }
-                    }
-                    await updateDoc(userRef, user)
-                    alert("Los cambios fueron aplicados correctamente")    
+                }
+                await updateDoc(userRef, user)
+                alert("Los cambios fueron aplicados correctamente")    
                 }
                 else {
                     console.log("No such document!");

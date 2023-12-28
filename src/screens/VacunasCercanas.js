@@ -16,7 +16,10 @@ export default function VacunasFuturas({ navigation }) {
     React.useCallback(() => {
       console.log(vacunasCercanas)
       setVacunasCercanas(vacunasCercanas)
-    }, vacunasCercanas)
+      return () => {
+        // Cleanup code here
+      };
+    }, [vacunasCercanas])
   );
  
   async function checkIfAnyVaccineDateHasPassed() {
