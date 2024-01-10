@@ -8,6 +8,7 @@ import StackNavigator from './src/components/StackNavigator'
 const Stack = createNativeStackNavigator();
 
 function App() {
+
   return (
     <NavigationContainer>
       <StackNavigator/>

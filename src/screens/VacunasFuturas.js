@@ -7,7 +7,7 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 export default function VacunasFuturas({ navigation }) {
   const {
-    vacunasFuturas,
+    vacunasFuturas, setVacunasFuturas,
     vacunasIndefinidas,
     uid
   } = useContext(PersonaContext)
@@ -16,6 +16,9 @@ export default function VacunasFuturas({ navigation }) {
     React.useCallback(() => {
       console.log(vacunasFuturas)
       setVacunasFuturas(vacunasFuturas)
+      if (vacunasIndefinidas.length > 0) {
+        navigation.navigate("UndefinedVacunas")
+      }
       return () => {
         // Cleanup code here
       };

@@ -16,6 +16,9 @@ export default function VacunasFuturas({ navigation }) {
     React.useCallback(() => {
       console.log(vacunasCercanas)
       setVacunasCercanas(vacunasCercanas)
+      if (vacunasIndefinidas.length > 0) {
+        navigation.navigate("UndefinedVacunas")
+      }
       return () => {
         // Cleanup code here
       };

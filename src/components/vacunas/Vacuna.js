@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
       flex: 1
     },
     textOne: {
-      fontWeight: "bold"
+      fontWeight: "bold",
+      
     },
     textTwo: {
       fontStyle: "italic"
@@ -63,10 +64,10 @@ function Vacuna(props) {
                 <View style={styles.vacunaSecondInnerContainer}>
                   <ButtonGroup
                     buttonStyle={{ padding: 0 }}
-                    selectedButtonStyle={{ backgroundColor: '#e2e2e2' }}
+                    selectedButtonStyle={{ backgroundColor: '#a5bcc2' }}
                     buttons={[
-                      <Icon name="check" />,
-                      <Icon name="close" />,
+                      <Text>SI</Text>,
+                      <Text>NO</Text>,
                     ]}
                     selectedIndex={selectedIndex}
                     onPress={handleSelectedIndexChange}

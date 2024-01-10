@@ -17,6 +17,9 @@ export default function VacunasPasadas({ navigation }) {
     React.useCallback(() => {
       console.log(vacunasPasadas)
       setVacunasPasadas(vacunasPasadas)
+      if (vacunasIndefinidas.length > 0) {
+        navigation.navigate("UndefinedVacunas")
+      }
       return () => {
         // Cleanup code here
       };

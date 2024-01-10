@@ -13,13 +13,10 @@ import SelectPerson from './SelectPerson';
 import VacunasPasadas from './VacunasPasadas';
 import VacunasCercanas from './VacunasCercanas'
 import VacunasFuturas from './VacunasFuturas';
-
-import {
-  getFirestore, doc, getDoc
-} from 'firebase/firestore'
+import { Icon } from '@rneui/themed';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+
 
 const Tab = createBottomTabNavigator()
 
@@ -36,9 +33,9 @@ function HomeScreen({ route }) {
         component={VacunasPasadas}
         options={{ title: 'Vacunas Previas',
         tabBarIcon:({size, color}) => (
-            <MaterialCommunityIcons name="menu-left-outline"
-            size={size} color={color} />
-        )
+          <Text style={{fontSize:30}}> {"<"} </Text>
+        ),
+        tabBarLabelStyle: { fontSize: 15, paddingBottom: 5 }
         }}
       />
       <Tab.Screen
@@ -47,9 +44,9 @@ function HomeScreen({ route }) {
         initialParams={{ uid: uid }}
         options={{ title: 'Vacunación Cercana',
         tabBarIcon:({size, color}) => (
-            <MaterialCommunityIcons name="details"
-            size={size} color={color} />
-        )
+          <Text style={{fontSize:20}}> o </Text>
+        ),
+        tabBarLabelStyle: { fontSize: 15, paddingBottom: 5 }
         }}
       />
       <Tab.Screen
@@ -58,9 +55,9 @@ function HomeScreen({ route }) {
         initialParams={{ uid: uid }}
         options={{ title: 'Vacunas Futuras',
         tabBarIcon:({size, color}) => (
-            <MaterialCommunityIcons name="menu-right-outline"
-            size={size} color={color} />
-        )
+          <Text style={{fontSize:30}}> {">"} </Text>
+        ),
+        tabBarLabelStyle: { fontSize: 15, paddingBottom: 5 }
         }}
       />
     </Tab.Navigator>

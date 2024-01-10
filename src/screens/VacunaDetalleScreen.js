@@ -280,6 +280,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 35,
         fontWeight: '500',
+        fontFamily: 'Inter-SemiBoldItalic'
     },
     textTwo: {
         fontSize: 15,
