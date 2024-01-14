@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import {
   getFirestore, doc, getDoc
 } from 'firebase/firestore'
-import { auth } from '../firebase';
+import { auth } from '../firebase/firebase';
 import { useEffect, useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native'
 import { PersonaContext } from '../contexts/PersonaContext'
@@ -22,6 +22,7 @@ const SelectPerson = ({ route, navigation }) => {
 
   useEffect(() => {
     getDocuments().then(array => {
+      setVacunasIndefinidas([])
       setPersonas(array);
       setIsLoading(false);
     });

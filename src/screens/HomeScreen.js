@@ -1,19 +1,13 @@
 import * as React from 'react';
-import { useState } from 'react';
 import {
   StyleSheet,
   Text,
   ScrollView,
   ActivityIndicator
 } from 'react-native';
-
-import Componenx from '../components/Componenx'
-import CreatePerson from './CreatePerson';
-import SelectPerson from './SelectPerson';
 import VacunasPasadas from './VacunasPasadas';
 import VacunasCercanas from './VacunasCercanas'
 import VacunasFuturas from './VacunasFuturas';
-import { Icon } from '@rneui/themed';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 

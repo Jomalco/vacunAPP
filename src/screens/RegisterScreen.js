@@ -6,7 +6,7 @@ import DateField from 'react-native-datefield';
 import {
   getFirestore, doc, setDoc
 } from 'firebase/firestore';
-import { auth } from '../firebase'
+import { auth } from '../firebase/firebase'
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState('')

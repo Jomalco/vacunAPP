@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useContext, useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../firebase'
+import { auth } from '../firebase/firebase';
 import { PersonaContext } from '../contexts/PersonaContext';
+import logoVacunAR from '../../assets/logoVacunAR.png'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
@@ -42,6 +43,9 @@ const LoginScreen = () => {
       style={styles.container}
       behavior="height"
     >
+      <View>
+        <Image source={logoVacunAR} style={{width: 200, height: 200}}/>
+      </View>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Correo electrónico"

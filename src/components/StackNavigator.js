@@ -1,7 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button } from 'react-native';
-import Componenx from './Componenx'
-import Welcome from './Welcome'
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
@@ -22,7 +20,7 @@ function MyStack() {
         <Stack.Navigator
             initialRouteName="LoginScreen"
         >
-          <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ title: 'VacunAPP' }}/>
+          <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ title: '' }}/>
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ title: 'Registrarse' }}/>
           <Stack.Screen name="CreatePerson" component={CreatePerson} options={{ title: 'Crear Persona' }}/>
           <Stack.Screen name="SelectPerson" component={SelectPerson} options={{ title: 'Seleccionar Persona' }}/>
@@ -30,7 +28,7 @@ function MyStack() {
           <Stack.Screen name="VacunAPP" component={HomeScreen} options={{
             title: '',
             headerRight: () => (
-              <Button title="Download PDF" onPress={() => {}} />
+              <Button title="Descargar PDF" onPress={() => {}} />
             ),
           }}/>
           <Stack.Screen name="VacunaDetalleScreen" component={VacunaDetalleScreen} options={{ title: '' }}/>

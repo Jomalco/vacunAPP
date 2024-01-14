@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, Button } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, Button, TouchableOpacity } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native'
 import { PersonaContext } from '../contexts/PersonaContext'
@@ -38,9 +38,10 @@ export default function UndefinedVacunas({ navigation }) {
             vacuna.status = 1;
           }
         }
-        await updateDoc(docRef, user).then(
+        await updateDoc(docRef, user).then(() => {
+          setVacunasIndefinidas([])
           navigation.navigate("VacunAPP", {uid: uid})
-        );
+        });
       }
       else {
         alert("El estado de todas las vacunas deben ser confirmados al mismo tiempo")
@@ -90,6 +91,11 @@ export default function UndefinedVacunas({ navigation }) {
             }}
             onPress={() => {updateUndefinedVaccines()}}
           />
+      <TouchableOpacity style={styles.undefinedVacunasButton2} onPress={() => {setVacunasIndefinidas([]);navigation.navigate("SelectPerson", {uid: uid})}}>
+            <Text>
+              Volver atrás
+            </Text>
+      </TouchableOpacity>   
       </SafeAreaView>
     </ScrollView>
     </View>
@@ -113,6 +119,15 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   undefinedVacunasButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    marginTop: 15,
+    marginBottom: 15
+  },
+  undefinedVacunasButton2: {
+    backgroundColor: '#F38383',
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 12,

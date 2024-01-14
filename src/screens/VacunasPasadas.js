@@ -15,7 +15,6 @@ export default function VacunasPasadas({ navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log(vacunasPasadas)
       setVacunasPasadas(vacunasPasadas)
       if (vacunasIndefinidas.length > 0) {
         navigation.navigate("UndefinedVacunas")
@@ -58,8 +57,8 @@ export default function VacunasPasadas({ navigation }) {
           <View style={styles.vaccinesContainer}>
             {vacunasPasadas.map((item, index) => {
                           return(
-                            <TouchableOpacity onPress={() => {navigation.navigate("VacunaDetalleScreen", { item, navigation })}}>
-                              <VacunaDetalle key={item.id} {...item} />
+                            <TouchableOpacity key={item.id} onPress={() => {navigation.navigate("VacunaDetalleScreen", { item, navigation })}}>
+                              <VacunaDetalle {...item} />
                             </TouchableOpacity>
                           )
             })}

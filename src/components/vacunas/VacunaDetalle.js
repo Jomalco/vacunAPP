@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
       width: "95%",
       height: "auto",
       padding: 10,
-      shadowColor: 'rgba(206, 237, 238, 1)',
+      shadowColor: 'rgba(206, 237, 238, 0.25)',
       shadowOpacity: 0,
       elevation: 1,
       shadowRadius: 0 ,

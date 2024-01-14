@@ -14,7 +14,6 @@ export default function VacunasFuturas({ navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log(vacunasCercanas)
       setVacunasCercanas(vacunasCercanas)
       if (vacunasIndefinidas.length > 0) {
         navigation.navigate("UndefinedVacunas")
@@ -51,8 +50,8 @@ export default function VacunasFuturas({ navigation }) {
         :
         vacunasCercanas.map((item, index) => {
               return(
-                <TouchableOpacity onPress={() => {navigation.navigate("VacunaDetalleScreen", { item, navigation })}}>
-                  <VacunaDetalle key={item.id} {...item} />    
+                <TouchableOpacity key={item.id} onPress={() => {navigation.navigate("VacunaDetalleScreen", { item, navigation })}}>
+                  <VacunaDetalle {...item} />    
                 </TouchableOpacity>
               )
         })  
