@@ -272,15 +272,15 @@ const VacunaDetalleScreen = ({route, navigation}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: "100%",
+        width: "100wh",
         alignContent: "center",
         alignItems: "center",
         paddingTop: 20,
     },
     text: {
-        fontSize: 35,
+        fontSize: 40,
         fontWeight: '500',
-        fontFamily: 'Inter-SemiBoldItalic'
+        fontFamily: ''
     },
     textTwo: {
         fontSize: 15,

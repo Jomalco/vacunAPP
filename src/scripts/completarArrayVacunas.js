@@ -31,7 +31,7 @@ function declassify(arr) {
     return {
         birthdate: vacuna.birthdate,
         nombre: vacuna.nombre,
-        status: vacuna.status,
+        status: 2, //Anula la entrada a Undefined Vacunas porque está bugueada la confirmación de estado
         factoresDeRiesgo: vacuna.factoresDeRiesgo,
         id: vacuna.id,
         dosis: vacuna.dosis,

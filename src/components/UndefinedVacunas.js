@@ -15,12 +15,13 @@ export default function UndefinedVacunas({ navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      setTimeout(function() {
-        if (vacunasIndefinidas.length == 0) {
-          navigation.navigate("VacunAPP", {uid: uid})
-        }
-    }, 1000);
-    }, [])
+      if (vacunasIndefinidas.length == 0) {
+        navigation.navigate("VacunAPP", {uid: uid})
+      }
+      return () => {
+        // Cleanup code here
+      };
+    }, [vacunasIndefinidas])
   );
  
   async function updateUndefinedVaccines() {
@@ -34,14 +35,18 @@ export default function UndefinedVacunas({ navigation }) {
           console.log(vacuna.nombre)
           if (selectedIndexes.hasOwnProperty(vacuna.id) && selectedIndexes[vacuna.id] === 1) {
             vacuna.status = 2;
+            vacuna.dosis[0] = 1
           } else if (selectedIndexes.hasOwnProperty(vacuna.id) && selectedIndexes[vacuna.id] === 0) {
             vacuna.status = 1;
+            vacuna.dosis[0] = vacuna.dosis[1]
           }
         }
-        await updateDoc(docRef, user).then(() => {
-          setVacunasIndefinidas([])
-          navigation.navigate("VacunAPP", {uid: uid})
-        });
+        await updateDoc(docRef, user)
+        setVacunasPasadas(vacunasIndefinidas)
+        setVacunasIndefinidas([])
+        setTimeout(() => {
+          navigation.navigate(("VacunAPP"), {uid: uid})
+        }, 1000);
       }
       else {
         alert("El estado de todas las vacunas deben ser confirmados al mismo tiempo")
@@ -91,7 +96,7 @@ export default function UndefinedVacunas({ navigation }) {
             }}
             onPress={() => {updateUndefinedVaccines()}}
           />
-      <TouchableOpacity style={styles.undefinedVacunasButton2} onPress={() => {setVacunasIndefinidas([]);navigation.navigate("SelectPerson", {uid: uid})}}>
+      <TouchableOpacity style={styles.undefinedVacunasButton2} onPress={() => {navigation.navigate("SelectPerson", {uid: uid})}}>
             <Text>
               Volver atrás
             </Text>

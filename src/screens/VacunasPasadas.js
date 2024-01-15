@@ -24,26 +24,7 @@ export default function VacunasPasadas({ navigation }) {
       };
     }, [vacunasPasadas])
   );
- 
-  async function updateUndefinedVaccines() {
-    const firestore = getFirestore();
-    const docRef = doc(firestore, 'users', uid);
-    const docSnap = await getDoc(docRef);
-    
-    if (docSnap.exists()) {
-     const user = docSnap.data();
-     console.log("Personas data:", user.Personas);
-    } else {
-     console.log("No such document!");
-    }
-    
-  }
 
-  const [selectedIndexes, setSelectedIndexes] = useState([]);
-
-  const handleUndefinedVacunasButton = () => {
-
-  }
 
   return (
     <View style={styles.container2}>

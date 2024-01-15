@@ -17,7 +17,7 @@ const SelectPerson = ({ route, navigation }) => {
     vacunasCercanas, setVacunasCercanas,
     vacunasFuturas, setVacunasFuturas,
     vacunasIndefinidas, setVacunasIndefinidas,
-    setIndex
+    setIndex, uid
   } = useContext(PersonaContext)
 
   useEffect(() => {
@@ -123,7 +123,6 @@ const SelectPerson = ({ route, navigation }) => {
     }
   }
  
-  const { uid } = route.params;
   const db = getFirestore();
   const docRef = doc(db, 'users', uid);
   

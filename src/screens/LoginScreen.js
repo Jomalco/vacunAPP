@@ -44,7 +44,7 @@ const LoginScreen = () => {
       behavior="height"
     >
       <View>
-        <Image source={logoVacunAR} style={{width: 200, height: 200}}/>
+        <Image source={logoVacunAR} style={{width: 200, height: 200, marginBottom: 20}}/>
       </View>
       <View style={styles.inputContainer}>
         <TextInput
